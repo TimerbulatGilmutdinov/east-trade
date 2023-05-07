@@ -20,6 +20,10 @@ public class AccountDto  {
     private Integer id;
     @Schema(description = "Email", example = "example@mail.ru")
     private String email;
+    @Schema(description = "Name", example = "Alex")
+    private String name;
+    @Schema(description = "Surname", example = "Jones")
+    private String surname;
     @Schema(description = "Phone number", example = "89271112233")
     private String phoneNumber;
     @Schema(description = "Account role", example = "ADMIN")
@@ -31,6 +35,8 @@ public class AccountDto  {
         return AccountDto.builder()
                 .id(account.getId())
                 .email(account.getEmail())
+                .name(account.getName())
+                .surname(account.getSurname())
                 .phoneNumber(account.getPhoneNumber())
                 .role(account.getRole())
                 .state(account.getState())
