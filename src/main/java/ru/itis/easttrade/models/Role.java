@@ -20,6 +20,8 @@ public class Role implements GrantedAuthority {
     public static final String MODERATOR = "MODERATOR";
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     @Column(nullable = false)
     private String name;
 

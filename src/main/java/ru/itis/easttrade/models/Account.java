@@ -31,7 +31,7 @@ public class Account {
     @OneToMany(mappedBy = "account")
     private List<Task> tasks;
     @ManyToOne
-    @JoinColumn(name = "role")
+    @JoinColumn(name = "role_id")
     private Role role;
     @Enumerated(EnumType.STRING)
     private State state;
