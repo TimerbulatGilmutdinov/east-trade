@@ -11,7 +11,7 @@ import ru.itis.easttrade.repositories.AccountsRepository;
 public class WelcomeController {
     private final AccountsRepository accountsRepository;
     @GetMapping("/")
-    private String getMainPage(Model model){
+    public String getMainPage(Model model){
         return "welcome";
     }
 }

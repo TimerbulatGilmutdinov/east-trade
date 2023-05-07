@@ -3,14 +3,18 @@ package ru.itis.easttrade.services.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import ru.itis.easttrade.dto.AccountDto;
 import ru.itis.easttrade.dto.NewOrUpdateAccountDto;
+import ru.itis.easttrade.exceptions.AlreadyExistsException;
 import ru.itis.easttrade.exceptions.NotFoundException;
 import ru.itis.easttrade.models.Account;
 import ru.itis.easttrade.models.Role;
 import ru.itis.easttrade.models.State;
 import ru.itis.easttrade.repositories.AccountsRepository;
 import ru.itis.easttrade.services.AccountsService;
+
+import javax.validation.Valid;
 
 import static ru.itis.easttrade.dto.AccountDto.from;
 
@@ -21,8 +25,10 @@ public class AccountsServiceImpl implements AccountsService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public AccountDto addAccount(NewOrUpdateAccountDto accountDto) {
-        accountsRepository.findByEmail(accountDto.getEmail()).orElseThrow(() -> new NotFoundException("Account with email <" + accountDto.getEmail() + "> not found"));
+    public AccountDto addAccount(@Valid @ModelAttribute NewOrUpdateAccountDto accountDto) {
+        if (accountsRepository.findByEmail(accountDto.getEmail()).isPresent()) {
+            throw new AlreadyExistsException("Account with email <" + accountDto.getEmail() + "> already exists", accountDto);
+        }
 
         Account accountToSave = Account.builder()
                 .email(accountDto.getEmail())
@@ -30,10 +36,11 @@ public class AccountsServiceImpl implements AccountsService {
                 .surname(accountDto.getSurname())
                 .phoneNumber(accountDto.getPhoneNumber())
                 .passwordHash(passwordEncoder.encode(accountDto.getPassword()))
-                .role(new Role(Role.ADMIN))
+                .role(new Role(1, Role.ADMIN))
                 .state(State.ACTIVE)
                 .build();
-        return from(accountsRepository.save(accountToSave));
+        accountsRepository.save(accountToSave);
+        return from(accountToSave);
     }
 
     @Override
@@ -94,14 +101,14 @@ public class AccountsServiceImpl implements AccountsService {
 
     public AccountDto grantModeratorAuthority(Integer id) {
         Account account = accountsRepository.findById(id).orElseThrow(() -> new NotFoundException("Account with id <" + id + "> not found"));
-        account.setRole(new Role(Role.MODERATOR));
+        account.setRole(new Role(3, Role.MODERATOR));
         accountsRepository.save(account);
         return from(account);
     }
 
     public AccountDto grantAdminAuthority(Integer id) {
         Account account = accountsRepository.findById(id).orElseThrow(() -> new NotFoundException("Account with id <" + id + "> not found"));
-        account.setRole(new Role(Role.ADMIN));
+        account.setRole(new Role(1, Role.ADMIN));
         accountsRepository.save(account);
         return from(account);
     }
