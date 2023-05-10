@@ -16,6 +16,8 @@ import ru.itis.easttrade.services.AccountsService;
 
 import javax.validation.Valid;
 
+import java.util.Optional;
+
 import static ru.itis.easttrade.dto.AccountDto.from;
 
 @Service
@@ -26,8 +28,13 @@ public class AccountsServiceImpl implements AccountsService {
 
     @Override
     public AccountDto addAccount(@Valid @ModelAttribute NewOrUpdateAccountDto accountDto) {
-        if (accountsRepository.findByEmail(accountDto.getEmail()).isPresent()) {
+        Optional<Account> accountByEmail = accountsRepository.findByEmail(accountDto.getEmail());
+        if (accountByEmail.isPresent()) {
             throw new AlreadyExistsException("Account with email <" + accountDto.getEmail() + "> already exists", accountDto);
+        }
+        Optional<Account> accountByPhoneNumber = accountsRepository.findByPhoneNumber(accountDto.getPhoneNumber());
+        if (accountByPhoneNumber.isPresent()) {
+            throw new AlreadyExistsException("Account with phone number <" + accountDto.getPhoneNumber() + "> already exists", accountDto);
         }
 
         Account accountToSave = Account.builder()
