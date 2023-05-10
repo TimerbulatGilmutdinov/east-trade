@@ -3,7 +3,7 @@
 <head>
     <title>Регистрация</title>
     <meta charset="utf-8">
-    <style type="text/css">
+    <style>
         body {
             display: flex;
             flex-direction: column;
@@ -56,6 +56,9 @@
 <body>
 <h2>Registration</h2>
 <form th:action="@{/registration}" method="post" th:object="${account}">
+    <div th:if="${not #strings.isEmpty(errorMessage)}" class="alert alert-info">
+        <p th:text="${errorMessage}"></p>
+    </div>
     <div>
         <input type="email" id="email" name="email" placeholder="Email" th:field="*{email}" required>
     </div>
