@@ -1,6 +1,7 @@
 package ru.itis.easttrade.services.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import ru.itis.easttrade.dto.AccountDto;
@@ -14,6 +15,8 @@ import ru.itis.easttrade.repositories.AccountsRepository;
 import ru.itis.easttrade.repositories.TasksRepository;
 import ru.itis.easttrade.services.TasksService;
 
+import java.security.Principal;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,14 +25,27 @@ import java.util.Optional;
 public class TasksServiceImpl implements TasksService {
     private final TasksRepository tasksRepository;
     private final AccountsRepository accountsRepository;
+
     @Override
     public TaskDto saveTask(@ModelAttribute NewOrUpdateTaskDto taskDto) {
-//        Task task = tasksRepository.findBy
-        return null;
+        Principal principal = (Principal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String email = principal.getName();
+        Account account = accountsRepository.findByEmail(email).orElseThrow(()->new NotFoundException("Account with email <"+email+"> not found"));
+        Task newTask = Task.builder()
+                .name(taskDto.getName())
+                .price(taskDto.getPrice())
+                .description(taskDto.getDescription())
+                .state(Task.TaskState.PENDING)
+                .publishDate(new Date())
+                .topic(taskDto.getTopic())
+                .account(account)
+                .build();
+        Task task = tasksRepository.save(newTask);
+        return TaskDto.from(task);
     }
 
     @Override
-    public TaskDto updateTask(Integer id,@ModelAttribute NewOrUpdateTaskDto taskDto) {
+    public TaskDto updateTask(Integer id, @ModelAttribute NewOrUpdateTaskDto taskDto) {
         return null;
     }
 
@@ -41,7 +57,7 @@ public class TasksServiceImpl implements TasksService {
     @Override
     public TaskDto getTaskById(Integer id) {
         Optional<Task> taskDB = tasksRepository.findById(id);
-        Task task = taskDB.orElseThrow(()->new NotFoundException("Task with id <"+id+"> not found"));
+        Task task = taskDB.orElseThrow(() -> new NotFoundException("Task with id <" + id + "> not found"));
         return TaskDto.from(task);
     }
 
@@ -51,8 +67,8 @@ public class TasksServiceImpl implements TasksService {
     }
 
     @Override
-    public List<TaskDto> getTasksByAccount(AccountDto accountDto) {
-        Account account = accountsRepository.findByEmail(accountDto.getEmail()).get();
+    public List<TaskDto> getTasksByAccount(@ModelAttribute AccountDto accountDto) {
+        Account account = accountsRepository.findByEmail(accountDto.getEmail()).orElseThrow(() -> new NotFoundException("Account with email <" + accountDto.getEmail() + "> not found"));
         return TaskDto.from(tasksRepository.findAllByAccount(account));
     }
 }
