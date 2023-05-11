@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Task</title>
+    <style>
+        body {
+            background-color: #F2F3F5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            background-color: #FFFFFF;
+            border: 1px solid #E1E3E6;
+            border-radius: 5px;
+            margin: 50px auto;
+            max-width: 600px;
+            padding: 30px;
+        }
+
+        h1 {
+            color: #4B4F56;
+            font-size: 36px;
+            margin: 0;
+        }
+
+        form {
+            margin-top: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            color: #4B4F56;
+            display: block;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        textarea {
+            background-color: #F2F3F5;
+            border: none;
+            border-radius: 5px;
+            box-shadow: none;
+            color: #4B4F56;
+            font-size: 16px;
+            padding: 10px;
+            width: 100%;
+            resize: vertical;
+        }
+
+        button[type="submit"] {
+            background-color: #5181B8;
+            border: none;
+            border-radius: 5px;
+            color: #FFFFFF;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 20px;
+            padding: 15px 30px;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #3E6C99;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Create Task</h1>
+    <form method="post" enctype="application/x-www-form-urlencoded">
+        <div class="form-group">
+            <label for="name">Title:</label>
+            <input type="text" id="name" name="name">
+        </div>
+        <div class="form-group">
+            <label for="price">Price:</label>
+            <input type="text" id="price" name="price">
+        </div>
+        <label for="topic">Topic:</label>
+        <select name="topic" id="topic">
+            <option value="CONSTRUCTION">Construction</option>
+            <option value="EDUCATION">Education</option>
+            <option value="LAND_WORK">Land work</option>
+            <option value="LOADING">Loading</option>
+            <option value="HOUSEWORK">Housework</option>
+            <option value="REPAIR">Repair</option>
+        </select>
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea id="description" name="description"></textarea>
+        </div>
+
+        <button type="submit">Create Task</button>
+        <br>
+    </form>
+    <button type="submit">Go back</button>
+</div>
+</body>
+</html>
