@@ -30,8 +30,7 @@
             <ul class="list-group">
                 <li class="list-group-item text-muted" contenteditable="false">Profile</li>
                 <li class="list-group-item text-right"><span class="pull-left"><strong
-                        class="">Name</strong></span>
-                    <p th:text="*{name}"></p>
+                        class="">Name</strong></span><p th:text="*{name}"></p>
                 </li>
                 <li class="list-group-item text-right"><span class="pull-left"><strong class="">Surname</strong></span>
                     <p th:text="*{surname}"></p>
@@ -50,24 +49,22 @@
             <ul class="list-group">
                 <li class="list-group-item text-muted">Активность <i class="fa fa-dashboard fa-1x"></i>
                 </li>
-                <li class="list-group-item text-right"><span class="pull-left"><strong
-                        class="">Tasks count</strong></span>
+                <li class="list-group-item text-right"><span class="pull-left"><strong class="">Tasks count</strong></span>
                     <p th:text="${tasks.size()}">
                 </li>
-                <li class="list-group-item text-right"><span class="pull-left"><strong
-                        class="">News count</strong></span> 13
+                <li class="list-group-item text-right"><span class="pull-left"><strong class="">News count</strong></span> 13
                 </li>
             </ul>
         </div>
         <!--/col-3-->
         <div class="col-sm-9" style="" contenteditable="false">
             <div class="panel panel-default">
-                <div class="panel-heading">Starfox221's Bio</div>
+                <div class="panel-heading">News</div>
                 <div class="panel-body"> A long description about me.
                 </div>
             </div>
             <div class="panel panel-default target">
-                <div class="panel-heading" contenteditable="false">Pets I Own</div>
+                <div class="panel-heading" contenteditable="false">Tasks</div>
                 <div class="panel-body">
                     <div class="row" th:each="task : ${tasks}">
                         <div class="col-md-4">
@@ -76,7 +73,7 @@
                                      src="https://click2delivery.ru/wp-content/uploads/2021/04/svg-editor-image-1-e1617788478264.png">
                                 <div class="caption">
                                     <h3 th:text="${task.getName()}">
-                                        <!--                                        Market-->
+<!--                                        Market-->
                                     </h3>
                                     <p>
                                         Cocker Spaniel who loves treats.
@@ -119,6 +116,6 @@
             <div id="push"></div>
         </div>
     </div>
-</div>
+
 </body>
 </html>

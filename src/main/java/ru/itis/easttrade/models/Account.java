@@ -1,9 +1,6 @@
 package ru.itis.easttrade.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -35,4 +32,8 @@ public class Account {
     private Role role;
     @Enumerated(EnumType.STRING)
     private State state;
+    @Override
+    public String toString(){
+        return name +" " +surname;
+    }
 }

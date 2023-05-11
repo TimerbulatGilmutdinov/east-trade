@@ -1,11 +1,18 @@
 package ru.itis.easttrade.dto;
 
-import ru.itis.easttrade.models.Account;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.itis.easttrade.models.Topic;
 
 import javax.persistence.*;
-import java.util.Date;
 
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Builder
 public class NewOrUpdateTaskDto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

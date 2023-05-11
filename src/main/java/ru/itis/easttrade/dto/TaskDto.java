@@ -34,7 +34,8 @@ public class TaskDto {
     private String description;
     @Schema(description = "Price", example = "899")
     private Double price;
-
+    @Schema(description = "State of task", example = "Pending/Completed")
+    private Task.TaskState state;
     public static TaskDto from(Task task) {
         return TaskDto.builder()
                 .id(task.getId())
@@ -43,6 +44,7 @@ public class TaskDto {
                 .topic(task.getTopic())
                 .description(task.getDescription())
                 .price(task.getPrice())
+                .state(task.getState())
                 .build();
     }
 
