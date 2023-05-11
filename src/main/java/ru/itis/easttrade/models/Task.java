@@ -15,6 +15,9 @@ import java.util.Date;
 @Table(name = "tasks")
 @Entity
 public class Task {
+    public enum TaskState {
+        PENDING, DISCUSSING, COMPLETED
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -32,4 +35,7 @@ public class Task {
     private String description;
     @Column(nullable = false)
     private Double price;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private TaskState state;
 }
