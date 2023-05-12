@@ -24,7 +24,8 @@ public class SecurityConfig  {
         httpSecurity
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/").hasRole("")
+                .antMatchers("/").permitAll()
+                .antMatchers("/welcome").permitAll()
                 .antMatchers("/profile").authenticated()
                 .antMatchers("/news").authenticated()
                 .antMatchers("/create-task").authenticated()
@@ -32,6 +33,7 @@ public class SecurityConfig  {
                 .formLogin()
                 .loginPage("/login")
                 .defaultSuccessUrl("/profile")
+                .failureUrl("/login")
                 .usernameParameter("email")
                 .and()
                 .logout()
