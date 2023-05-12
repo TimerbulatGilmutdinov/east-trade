@@ -1,7 +1,6 @@
 package ru.itis.easttrade.services.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import ru.itis.easttrade.dto.AccountDto;
@@ -27,10 +26,9 @@ public class TasksServiceImpl implements TasksService {
     private final AccountsRepository accountsRepository;
 
     @Override
-    public TaskDto saveTask(@ModelAttribute NewOrUpdateTaskDto taskDto) {
-        Principal principal = (Principal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public TaskDto saveTask(@ModelAttribute NewOrUpdateTaskDto taskDto, Principal principal) {
         String email = principal.getName();
-        Account account = accountsRepository.findByEmail(email).orElseThrow(()->new NotFoundException("Account with email <"+email+"> not found"));
+        Account account = accountsRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("Account with email <" + email + "> not found"));
         Task newTask = Task.builder()
                 .name(taskDto.getName())
                 .price(taskDto.getPrice())

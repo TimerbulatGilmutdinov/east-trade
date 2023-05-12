@@ -5,10 +5,11 @@ import ru.itis.easttrade.dto.NewOrUpdateTaskDto;
 import ru.itis.easttrade.dto.TaskDto;
 import ru.itis.easttrade.models.Topic;
 
+import java.security.Principal;
 import java.util.List;
 
 public interface TasksService {
-    TaskDto saveTask(NewOrUpdateTaskDto taskDto);
+    TaskDto saveTask(NewOrUpdateTaskDto taskDto, Principal principal);
     TaskDto updateTask(Integer id, NewOrUpdateTaskDto updateTask);
     void deleteTaskById(Integer id);
     TaskDto getTaskById(Integer id);
