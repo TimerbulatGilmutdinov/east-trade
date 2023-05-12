@@ -55,7 +55,7 @@
 </head>
 <body>
 <h2>Registration</h2>
-<form th:action="@{/registration}" method="post" th:object="${account}">
+<form name="registration-form" th:action="@{/registration}" method="post" th:object="${account}">
     <div th:if="${not #strings.isEmpty(errorMessage)}" class="alert alert-info">
         <p th:text="${errorMessage}"></p>
     </div>
@@ -77,6 +77,6 @@
     <button type="submit">Зарегистрироваться</button>
 </form>
 </body>
-<a href="/"><button type="submit">На главную</button></a>
+<a href="/welcome"><button type="submit">На главную</button></a>
 
 </html>

@@ -29,6 +29,7 @@ public class SecurityConfig  {
                 .antMatchers("/profile").authenticated()
                 .antMatchers("/news").authenticated()
                 .antMatchers("/create-task").authenticated()
+                .antMatchers("/my-tasks").authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")

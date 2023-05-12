@@ -56,31 +56,31 @@
     <h1>Услуга</h1>
     <div class="field">
         <label>Автор:</label>
-        <p th:field="*{account}" th:text="*{account}"></p>
+        <p th:text="${task.account}"></p>
     </div>
     <div class="field">
         <label>Дата публикации:</label>
-        <p th:field="*{publishDate}" th:text="*{publishDate}"></p>
+        <p  th:text="${task.publishDate}"></p>
     </div>
     <div class="field">
         <label>Тема:</label>
-        <p th:field="*{topic}" th:text="*{topic}"></p>
+        <p th:text="${task.topic}"></p>
     </div>
     <div class="field">
         <label>Название:</label>
-        <p th:field="*{name}" th:text="*{name}"></p>
+        <p th:text="${task.name}"></p>
     </div>
     <div class="field">
         <label>Описание:</label>
-        <p th:field="*{description}" th:text="*{description}"></p>
+        <p th:text="${task.description}"></p>
     </div>
     <div class="field">
         <label>Цена:</label>
-        <p th:field="*{price}" th:text="*{price}"></p>
+        <p th:text="${task.price}"></p>
     </div>
     <div class="field">
         <label>Состояние:</label>
-        <p th:field="*{state}" th:text="*{state}"></p>
+        <p th:text="${task.state}"></p>
     </div>
     <a href="#" class="button">Изменить</a>
 </div>
