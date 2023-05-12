@@ -10,7 +10,7 @@ import ru.itis.easttrade.repositories.AccountsRepository;
 @RequiredArgsConstructor
 public class WelcomeController {
     private final AccountsRepository accountsRepository;
-    @GetMapping("/")
+    @GetMapping("/welcome")
     public String getMainPage(Model model){
         return "welcome";
     }
