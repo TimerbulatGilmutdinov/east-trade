@@ -13,6 +13,8 @@ import ru.itis.easttrade.dto.TaskDto;
 import ru.itis.easttrade.services.AccountsService;
 import ru.itis.easttrade.services.TasksService;
 
+import java.security.Principal;
+
 @Controller
 @RequiredArgsConstructor
 public class TasksController {
@@ -33,8 +35,8 @@ public class TasksController {
     }
 
     @PostMapping("/create-task")
-    public String createTask(@ModelAttribute("task") NewOrUpdateTaskDto taskDto){
-        tasksService.saveTask(taskDto);
-        return "redirect:"+ MvcUriComponentsBuilder.fromMappingName("TC#getTask").arg(0,taskDto.getId()).build();
+    public String createTask(@ModelAttribute("task") NewOrUpdateTaskDto taskDto, Principal principal){
+        int id = tasksService.saveTask(taskDto, principal).getId();
+        return "redirect:"+ MvcUriComponentsBuilder.fromMappingName("TC#getTask").arg(0,id).build();
     }
 }

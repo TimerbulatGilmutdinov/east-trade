@@ -42,6 +42,7 @@ public class TaskDto {
                 .account(task.getAccount())
                 .publishDate(task.getPublishDate())
                 .topic(task.getTopic())
+                .name(task.getName())
                 .description(task.getDescription())
                 .price(task.getPrice())
                 .state(task.getState())
