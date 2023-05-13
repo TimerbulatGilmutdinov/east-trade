@@ -37,12 +37,4 @@ public class ProfileController {
         model.addAttribute("tasks", tasks);
         return "profile";
     }
-
-    @GetMapping("/my-tasks")
-    public String myTasks(Model model, Principal principal) {
-        AccountDto accountDto = accountsService.getAccountByEmail(principal.getName());
-        List<TaskDto> tasks = tasksService.getTasksByAccount(accountDto);
-        model.addAttribute("tasks", tasks);
-        return "my-tasks";
-    }
 }

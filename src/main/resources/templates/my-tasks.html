@@ -31,6 +31,22 @@
         <p th:text="${task.state}"></p>
     </div>
     <a href="#" class="button">Изменить</a>
+    <button class="button" onclick="deleteTask([[${task.id}]])">Удалить</button>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    function deleteTask(taskId) {
+        // Выполняем AJAX-запрос на удаление задачи
+        $.ajax({
+            url: "/tasks/" + taskId,
+            method: "DELETE",
+            success: function (result) {
+                // Перезагружаем страницу после удаления задачи
+                location.reload();
+            }
+        });
+    }
+</script>
 </body>
 </html>

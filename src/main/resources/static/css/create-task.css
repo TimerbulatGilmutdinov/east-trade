@@ -55,7 +55,7 @@ textarea {
     resize: vertical;
 }
 
-button[type="submit"] {
+button {
     background-color: #5181B8;
     border: none;
     border-radius: 5px;

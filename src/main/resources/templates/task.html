@@ -1,55 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
     <meta charset="UTF-8">
     <title>Услуга</title>
-    <style>
-        body {
-            background-color: #F2F3F5;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        .container {
-            background-color: #FFFFFF;
-            border: 1px solid #E1E3E6;
-            border-radius: 5px;
-            margin: 50px auto;
-            max-width: 600px;
-            padding: 30px;
-        }
-        h1 {
-            font-size: 24px;
-            font-weight: bold;
-            margin-top: 0;
-        }
-        .field {
-            margin-bottom: 20px;
-        }
-        .field label {
-            display: block;
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        .field p {
-            margin: 0;
-        }
-        .button {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #5181B8;
-            color: #FFFFFF;
-            font-size: 16px;
-            font-weight: bold;
-            text-align: center;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-        .button:hover {
-            background-color: #3B6A9E;
-        }
-    </style>
+    <link rel="stylesheet" href="/static/css/task.css">
 </head>
 <body>
 <div class="container" th:object="${task}">
@@ -60,7 +15,7 @@
     </div>
     <div class="field">
         <label>Дата публикации:</label>
-        <p  th:text="${task.publishDate}"></p>
+        <p th:text="${task.publishDate}"></p>
     </div>
     <div class="field">
         <label>Тема:</label>
@@ -82,7 +37,9 @@
         <label>Состояние:</label>
         <p th:text="${task.state}"></p>
     </div>
-    <a href="#" class="button">Изменить</a>
+
+    <a href="/welcome"><button type="submit">Edit</button></a>
+    <a href="/welcome"><button type="submit">Go to profile</button></a>
 </div>
 </body>
 </html>
