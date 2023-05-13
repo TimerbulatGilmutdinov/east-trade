@@ -1,4 +1,4 @@
-package ru.itis.easttrade.config.viewreolvers;
+package ru.itis.easttrade.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
