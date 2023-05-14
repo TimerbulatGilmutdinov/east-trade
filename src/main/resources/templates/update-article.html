@@ -16,12 +16,12 @@
     <h1>Update Article</h1>
     <form method="post" enctype="application/x-www-form-urlencoded">
         <div class="form-group">
-            <label for="name">Title:</label>
-            <input type="text" id="name" th:value="${article.title}" name="name">
+            <label for="title">Title:</label>
+            <input type="text" id="title" th:value="${article.title}" name="title">
         </div>
         <div class="form-group">
             <label for="content">Content:</label>
-            <textarea id="content" th:utext="${article.content}" name="description"></textarea>
+            <textarea id="content" th:utext="${article.content}" name="content"></textarea>
         </div>
 
         <button type="submit">Save</button>

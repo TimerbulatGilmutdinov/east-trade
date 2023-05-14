@@ -19,5 +19,5 @@ public interface ArticlesRepository extends JpaRepository<Article, Integer> {
     List<Article> findAllByOrderByPublishDateAsc();
     @Modifying
     @Query("UPDATE Article a SET a.title = :newTitle, a.content= :newContent WHERE a.id = :id")
-    Article updateById(@Param("id") Integer id, @Param("newTitle") String newTitle, @Param("newContent") String content);
+    void updateById(@Param("id") Integer id, @Param("newTitle") String newTitle, @Param("newContent") String content);
 }

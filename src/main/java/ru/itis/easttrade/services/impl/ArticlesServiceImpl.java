@@ -5,18 +5,14 @@ import org.jsoup.Jsoup;
 import org.jsoup.safety.Safelist;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
 import ru.itis.easttrade.dto.AccountDto;
 import ru.itis.easttrade.dto.ArticleDto;
 import ru.itis.easttrade.dto.NewOrUpdateArticleDto;
-import ru.itis.easttrade.dto.TaskDto;
-import ru.itis.easttrade.exceptions.AlreadyExistsException;
 import ru.itis.easttrade.exceptions.NotFoundException;
 import ru.itis.easttrade.models.Account;
 import ru.itis.easttrade.models.Article;
 import ru.itis.easttrade.repositories.AccountsRepository;
 import ru.itis.easttrade.repositories.ArticlesRepository;
-import ru.itis.easttrade.services.AccountsService;
 import ru.itis.easttrade.services.ArticlesService;
 
 import javax.transaction.Transactional;
@@ -51,24 +47,23 @@ public class ArticlesServiceImpl implements ArticlesService {
         return ArticleDto.from(articlesRepository.findAll());
     }
 
-    public List<ArticleDto> getAllArticlesOrderByDateAsc(){
+    public List<ArticleDto> getAllArticlesOrderByDateAsc() {
         return ArticleDto.from(articlesRepository.findAllByOrderByPublishDateAsc());
     }
 
-    public List<ArticleDto> getAllArticlesOrderByDateDesc(){
+    public List<ArticleDto> getAllArticlesOrderByDateDesc() {
         return ArticleDto.from(articlesRepository.findAllByOrderByPublishDateDesc());
     }
 
     @Transactional
-    public ArticleDto updateArticleById(@RequestParam("id") Integer id, NewOrUpdateArticleDto article) {
-        Optional<Article> articleDB = articlesRepository.findById(id);
-        if (articleDB.isEmpty()) {
-            throw new NotFoundException("Article with id <" + id + "> does not exist");
-        }
-        article.setContent(Jsoup.clean(article.getContent(), Safelist.basic()));
-        return ArticleDto.from(articlesRepository.updateById(id, article.getTitle(), article.getContent()));
+    public void updateArticleById(Integer id, @ModelAttribute NewOrUpdateArticleDto article) {
+        articlesRepository.findById(id).orElseThrow(()->new NotFoundException("Article with id <"+id+"> not found"));
+        String newTitle = Jsoup.clean(article.getTitle(),Safelist.basic());
+        String newContent = Jsoup.clean(article.getContent(),Safelist.basic());
+        articlesRepository.updateById(id, newTitle, newContent);
     }
 
+    @Transactional
     public ArticleDto saveArticle(ArticleDto articleDto, Principal principal) {
         String email = principal.getName();
         Account account = accountsRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("Account with email <" + email + "> not found"));
