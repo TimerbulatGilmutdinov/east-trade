@@ -11,27 +11,27 @@
     <h1 th:object="${task}" th:field="*{name}" th:inline="text">[[${task.name}]]</h1>
 
     <div class="field">
-        <label>Дата публикации:</label>
+        <label>Publish date:</label>
         <p th:text="${task.publishDate}"></p>
     </div>
     <div class="field">
-        <label>Тема:</label>
+        <label>Topic:</label>
         <p th:text="${task.topic}"></p>
     </div>
     <div class="field">
-        <label>Описание:</label>
+        <label>Description:</label>
         <p th:text="${task.description}"></p>
     </div>
     <div class="field">
-        <label>Цена:</label>
+        <label>Price:</label>
         <p th:text="${task.price}"></p>
     </div>
     <div class="field">
-        <label>Состояние:</label>
+        <label>State:</label>
         <p th:text="${task.state}"></p>
     </div>
-    <a href="#" class="button">Изменить</a>
-    <button class="button" onclick="deleteTask([[${task.id}]])">Удалить</button>
+    <a th:href="@{/tasks/id/update (id=${task.id})}" class="button">Edit</a>
+    <button class="button" onclick="deleteTask([[${task.id}]])">Delete</button>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 

@@ -40,6 +40,7 @@ public class SecurityConfig  {
                 .and()
                 .logout()
                 .logoutSuccessUrl("/welcome")
+                .deleteCookies("JSESSIONID")
                 .and()
                 .exceptionHandling()
                 .accessDeniedPage("/403");
