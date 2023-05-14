@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface TasksService {
     TaskDto saveTask(NewOrUpdateTaskDto taskDto, Principal principal);
-    TaskDto updateTask(Integer id, NewOrUpdateTaskDto updateTask);
+    void updateTask(Integer id, NewOrUpdateTaskDto updateTask);
     void deleteTaskById(Integer id);
     TaskDto getTaskById(Integer id);
     List<TaskDto> getTasksByTopic(Topic topic);

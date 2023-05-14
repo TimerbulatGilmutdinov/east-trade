@@ -1,6 +1,8 @@
 package ru.itis.easttrade.services.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Safelist;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import ru.itis.easttrade.dto.AccountDto;
@@ -14,6 +16,7 @@ import ru.itis.easttrade.repositories.AccountsRepository;
 import ru.itis.easttrade.repositories.TasksRepository;
 import ru.itis.easttrade.services.TasksService;
 
+import javax.transaction.Transactional;
 import java.security.Principal;
 import java.util.Date;
 import java.util.List;
@@ -26,6 +29,7 @@ public class TasksServiceImpl implements TasksService {
     private final AccountsRepository accountsRepository;
 
     @Override
+    @Transactional
     public TaskDto saveTask(@ModelAttribute NewOrUpdateTaskDto taskDto, Principal principal) {
         String email = principal.getName();
         Account account = accountsRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("Account with email <" + email + "> not found"));
@@ -43,11 +47,16 @@ public class TasksServiceImpl implements TasksService {
     }
 
     @Override
-    public TaskDto updateTask(Integer id, @ModelAttribute NewOrUpdateTaskDto taskDto) {
-        return null;
+    @Transactional
+    public void updateTask(Integer id, @ModelAttribute NewOrUpdateTaskDto taskDto) {
+        tasksRepository.findById(id).orElseThrow(()->new NotFoundException("Task with id <"+id+"> not found"));
+        String newName = Jsoup.clean(taskDto.getName(), Safelist.basic());
+        String newDescription = Jsoup.clean(taskDto.getDescription(),Safelist.basic());
+        tasksRepository.updateById(id, newName,newDescription);
     }
 
     @Override
+    @Transactional
     public void deleteTaskById(Integer id) {
         tasksRepository.findById(id).orElseThrow(()->new NotFoundException("Task with id <"+id+"> not found"));
         tasksRepository.deleteById(id);

@@ -38,8 +38,12 @@
         <p th:text="${task.state}"></p>
     </div>
 
-    <a href="/welcome"><button type="submit">Edit</button></a>
-    <a href="/welcome"><button type="submit">Go to profile</button></a>
+    <a th:href="@{'/tasks/'+${task.id}+'/update'}">
+        <button type="submit">Edit</button>
+    </a>
+    <a th:href="@{/profile}">
+        <button type="submit">Go to profile</button>
+    </a>
 </div>
 </body>
 </html>

@@ -59,4 +59,10 @@ public class TasksController {
         model.addAttribute("task", task);
         return "update-task";
     }
+
+    @PostMapping("/tasks/{id}/update")
+    public String updateTask(@PathVariable("id") Integer id, @ModelAttribute NewOrUpdateTaskDto taskDto){
+        tasksService.updateTask(id,taskDto);
+        return "redirect:"+MvcUriComponentsBuilder.fromMappingName("TC#getTaskById").arg(0,id).build();
+    }
 }

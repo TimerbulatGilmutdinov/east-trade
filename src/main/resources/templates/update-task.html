@@ -1,40 +1,42 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Update Task</title>
-  <link rel="stylesheet" href="/static/css/create-task.css">
+    <meta charset="UTF-8">
+    <title>Update Task</title>
+    <link rel="stylesheet" href="/static/css/create-task.css">
 </head>
 <body>
 <div class="container" th:object="${task}">
-  <h1>Update Task</h1>
-  <form method="post" enctype="application/x-www-form-urlencoded">
-    <div class="form-group">
-      <label for="name">Title:</label>
-      <input type="text" id="name" th:value="${task.name}" name="name">
-    </div>
-    <div class="form-group">
-      <label for="price">Price:</label>
-      <input type="text" id="price" th:value="${task.price}" name="price">
-    </div>
-    <label for="topic">Topic:</label>
-    <select name="topic" id="topic" th:value="${task.topic}">
-      <option value="CONSTRUCTION">Construction</option>
-      <option value="EDUCATION">Education</option>
-      <option value="LAND_WORK">Land work</option>
-      <option value="LOADING">Loading</option>
-      <option value="HOUSEWORK">Housework</option>
-      <option value="REPAIR">Repair</option>
-    </select>
-    <div class="form-group">
-      <label for="description">Description:</label>
-      <textarea id="description" th:value="${task.description}" name="description"></textarea>
-    </div>
+    <h1>Update Task</h1>
+    <form method="post" enctype="application/x-www-form-urlencoded">
+        <div class="form-group">
+            <label for="name">Title:</label>
+            <input type="text" id="name" th:value="${task.name}" name="name">
+        </div>
+        <div class="form-group">
+            <label for="price">Price:</label>
+            <input type="text" id="price" th:value="${task.price}" name="price">
+        </div>
+        <label for="topic">Topic:</label>
+        <select name="topic" id="topic" th:value="${task.topic}">
+            <option value="CONSTRUCTION">Construction</option>
+            <option value="EDUCATION">Education</option>
+            <option value="LAND_WORK">Land work</option>
+            <option value="LOADING">Loading</option>
+            <option value="HOUSEWORK">Housework</option>
+            <option value="REPAIR">Repair</option>
+        </select>
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea id="description" th:value="${task.description}" name="description"></textarea>
+        </div>
 
-    <button type="submit">Save</button>
-    <br>
-  </form>
-  <a th:href="@{'/tasks/'+${task.id}}"><button type="submit">Go back</button></a>
+        <button type="submit">Save</button>
+        <br>
+    </form>
+    <a th:href="@{'/tasks/'+${task.id}}">
+        <button type="submit">Go back</button>
+    </a>
 </div>
 </body>
 </html>
