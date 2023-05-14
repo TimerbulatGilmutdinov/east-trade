@@ -1,10 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title th:text="${article.title}"></title>
+    <link rel="stylesheet" href="/static/css/task.css">
 </head>
 <body>
+<div class="container" th:object="${article}">
+    <h1>Article</h1>
+    <div class="field">
+        <label>Author:</label>
+        <p th:text="${article.account}"></p>
+    </div>
+    <div class="field">
+        <label>Publish date:</label>
+        <p th:text="${article.publishDate}"></p>
+    </div>
+    <div class="field">
+        <label>Title:</label>
+        <p th:text="${article.title}"></p>
+    </div>
+    <div class="field">
+        <label>Content:</label>
+        <p th:utext="${article.content}"></p>
+    </div>
 
+    <a th:href="@{/articles/{id}/update(id=${article.id})}"><button type="submit">Edit</button></a>
+    <a href="/profile"><button type="submit">Go to profile</button></a>
+</div>
 </body>
 </html>

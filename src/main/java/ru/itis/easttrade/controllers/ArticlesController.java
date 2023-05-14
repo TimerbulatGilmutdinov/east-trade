@@ -47,17 +47,17 @@ public class ArticlesController {
 
     @PostMapping("/create-article")
     public String createArticle(@ModelAttribute("article") ArticleDto articleDto, Principal principal) {
-        int id = articlesService.saveArticle(articleDto).getId();
-        return "redirect:" + MvcUriComponentsBuilder.fromMappingName("TC#getArticleById").arg(0, id).build();
+        int id = articlesService.saveArticle(articleDto,principal).getId();
+        return "redirect:" + MvcUriComponentsBuilder.fromMappingName("AC#getArticleById").arg(0, id).build();
     }
 
-    @GetMapping("/article/{id}/update")
+    @GetMapping("/articles/{id}/update")
     public String getUpdateArticle(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("article", articlesService.findArticleById(id));
         return "update-article";
     }
 
-    @PostMapping("/article/{id}/update")
+    @PostMapping("/articles/{id}/update")
     public String updateArticle(@PathVariable("id") Integer id, @ModelAttribute("article") NewOrUpdateArticleDto articleDto, Model model) {
         articlesService.updateArticleById(id, articleDto);
         return "redirect:"+MvcUriComponentsBuilder.fromMappingName("AC#getArticleById").arg(0,id).build();

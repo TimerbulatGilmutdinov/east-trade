@@ -15,6 +15,7 @@ import ru.itis.easttrade.models.Task;
 import ru.itis.easttrade.repositories.AccountsRepository;
 import ru.itis.easttrade.repositories.TasksRepository;
 import ru.itis.easttrade.services.AccountsService;
+import ru.itis.easttrade.services.ArticlesService;
 import ru.itis.easttrade.services.TasksService;
 
 import java.security.Principal;
@@ -23,11 +24,9 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class ProfileController {
-    @Autowired
     private final TasksService tasksService;
-
-    @Autowired
     private final AccountsService accountsService;
+    private final ArticlesService articlesService;
 
     @GetMapping("/profile")
     public String profilePage(Model model, Principal principal) {
@@ -35,6 +34,7 @@ public class ProfileController {
         List<TaskDto> tasks = tasksService.getTasksByAccount(accountDto);
         model.addAttribute("account", accountDto);
         model.addAttribute("tasks", tasks);
+        model.addAttribute("articles", articlesService.getArticlesByAccount(accountDto));
         return "profile";
     }
 }
