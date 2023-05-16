@@ -61,21 +61,19 @@
         </div>
         <!--/col-3-->
         <div class="col-sm-9" style="" contenteditable="false">
-            <div class="panel panel-default">
-                <div class="panel panel-default target">
-                    <div class="panel-heading" contenteditable="false">News</div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-md-4" th:each="article : ${articles}">
-                                <div class="thumbnail" th:object="${article}">
-                                    <!--                                <img alt="300x200"-->
-                                    <!--                                     src="https://click2delivery.ru/wp-content/uploads/2021/04/svg-editor-image-1-e1617788478264.png">-->
-                                    <div class="caption">
-                                        <a th:href="@{/articles/{id}(id=${article.id})}"><h3 th:text="*{title}">
-                                        </h3></a>
-<!--                                        <p th:field="*{description}" th:text="*{description}">-->
-<!--                                        </p>-->
-                                    </div>
+            <div class="panel panel-default target">
+                <div class="panel-heading" contenteditable="false">News</div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-4" th:each="article : ${articles}">
+                            <div class="thumbnail" th:object="${article}">
+                                <!--                                <img alt="300x200"-->
+                                <!--                                     src="https://click2delivery.ru/wp-content/uploads/2021/04/svg-editor-image-1-e1617788478264.png">-->
+                                <div class="caption">
+                                    <a th:href="@{/articles/{id}(id=${article.id})}"><h3 th:text="*{title}">
+                                    </h3></a>
+                                    <!--                                        <p th:field="*{description}" th:text="*{description}">-->
+                                    <!--                                        </p>-->
                                 </div>
                             </div>
                         </div>

@@ -1,0 +1,42 @@
+package ru.itis.easttrade.controllers.rest;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+import ru.itis.easttrade.controllers.rest.api.ArticlesApi;
+import ru.itis.easttrade.dto.ArticleDto;
+import ru.itis.easttrade.dto.NewOrUpdateArticleDto;
+import ru.itis.easttrade.services.ArticlesService;
+
+import java.security.Principal;
+
+@RestController
+@RequiredArgsConstructor
+public class ArticlesRestController implements ArticlesApi {
+    private final ArticlesService articlesService;
+
+    @Override
+    public ResponseEntity<ArticleDto> getArticleById(Integer id) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(articlesService.getArticleById(id));
+    }
+
+    @Override
+    public ResponseEntity<ArticleDto> createArticle(@RequestBody ArticleDto articleDto, Principal principal) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<ArticleDto> updateArticleById(Integer id,@RequestBody NewOrUpdateArticleDto updatedArticle) {
+        articlesService.updateArticleById(id, updatedArticle);
+        return ResponseEntity.accepted()
+                .body(articlesService.getArticleById(id));
+    }
+
+    @Override
+    public ResponseEntity<?> deleteArticleById(Integer id) {
+        return null;
+    }
+}

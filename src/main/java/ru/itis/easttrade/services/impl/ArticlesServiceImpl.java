@@ -27,12 +27,12 @@ public class ArticlesServiceImpl implements ArticlesService {
     private final ArticlesRepository articlesRepository;
     private final AccountsRepository accountsRepository;
 
-    public ArticleDto findArticleById(Integer id) {
+    public ArticleDto getArticleById(Integer id) {
         Article article = articlesRepository.findById(id).orElseThrow(() -> new NotFoundException("Article with id <" + id + "> not found"));
         return ArticleDto.from(article);
     }
 
-    public ArticleDto findArticleByTitle(String title) {
+    public ArticleDto getArticleByTitle(String title) {
         Article article = articlesRepository.findByTitle(title).orElseThrow(() -> new NotFoundException("Article with title <" + title + "> not found"));
         return ArticleDto.from(article);
     }

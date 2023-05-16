@@ -7,7 +7,7 @@ import ru.itis.easttrade.exceptions.AlreadyExistsException;
 import ru.itis.easttrade.exceptions.NotFoundException;
 
 @ControllerAdvice
-public class NotFoundExceptionHandler extends RuntimeException {
+public class NotFoundExceptionHandler {
     @ExceptionHandler(NotFoundException.class)
     public String handleNotFoundException(NotFoundException ex, Model model){
         model.addAttribute("errorMessage",ex.getMessage());

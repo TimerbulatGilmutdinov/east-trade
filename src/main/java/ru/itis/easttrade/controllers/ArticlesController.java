@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import ru.itis.easttrade.dto.ArticleDto;
 import ru.itis.easttrade.dto.NewOrUpdateArticleDto;
-import ru.itis.easttrade.dto.NewOrUpdateTaskDto;
-import ru.itis.easttrade.models.Article;
 import ru.itis.easttrade.services.ArticlesService;
 
 import java.security.Principal;
@@ -35,7 +33,7 @@ public class ArticlesController {
 
     @GetMapping("/articles/{id}")
     public String getArticleById(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("article", articlesService.findArticleById(id));
+        model.addAttribute("article", articlesService.getArticleById(id));
         return "article";
     }
 
@@ -53,7 +51,7 @@ public class ArticlesController {
 
     @GetMapping("/articles/{id}/update")
     public String getUpdateArticle(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("article", articlesService.findArticleById(id));
+        model.addAttribute("article", articlesService.getArticleById(id));
         return "update-article";
     }
 

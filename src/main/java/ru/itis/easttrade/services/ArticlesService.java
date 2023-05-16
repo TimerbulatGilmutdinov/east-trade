@@ -9,10 +9,10 @@ import java.security.Principal;
 import java.util.List;
 
 public interface ArticlesService {
-    ArticleDto findArticleById(Integer id);
+    ArticleDto getArticleById(Integer id);
 
 
-    ArticleDto findArticleByTitle(String title);
+    ArticleDto getArticleByTitle(String title);
 
     List<ArticleDto> getAllArticles();
 
