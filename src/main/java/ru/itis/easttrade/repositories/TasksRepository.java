@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.itis.easttrade.models.Account;
+import ru.itis.easttrade.models.Article;
 import ru.itis.easttrade.models.Task;
 import ru.itis.easttrade.models.Topic;
 
@@ -17,6 +18,8 @@ public interface TasksRepository extends JpaRepository<Task, Integer> {
     List<Task> findAllByTopic(Topic topic);
     List<Task> findAllByPublishDate(Date date);
     List<Task> findAllByAccount(Account account);
+    List<Task> findAllByOrderByPublishDateDesc();
+    List<Task> findAllByOrderByPublishDateAsc();
     @Modifying
     @Query("UPDATE Task a SET a.name = :newName, a.description= :newDescription WHERE a.id = :id")
     void updateById(@Param("id") Integer id, @Param("newName") String newName, @Param("newDescription") String newDescription);

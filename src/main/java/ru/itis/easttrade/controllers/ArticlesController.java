@@ -24,7 +24,7 @@ public class ArticlesController {
     private final ArticlesService articlesService;
 
     @GetMapping("/articles")
-    public String getAllArticles(@RequestParam(value = "sortBy", defaultValue = "new") String sort, Model model) {
+    public String getAllArticles(@RequestParam(value = "sortBy",defaultValue = "new") String sort, Model model) {
         List<ArticleDto> articles;
         if (sort.equals("new")) {
             articles = articlesService.getAllArticlesOrderByDateAsc();

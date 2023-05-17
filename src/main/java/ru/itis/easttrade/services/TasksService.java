@@ -1,6 +1,7 @@
 package ru.itis.easttrade.services;
 
 import ru.itis.easttrade.dto.AccountDto;
+import ru.itis.easttrade.dto.ArticleDto;
 import ru.itis.easttrade.dto.NewOrUpdateTaskDto;
 import ru.itis.easttrade.dto.TaskDto;
 import ru.itis.easttrade.models.Topic;
@@ -13,6 +14,9 @@ public interface TasksService {
     void updateTask(Integer id, NewOrUpdateTaskDto updateTask);
     void deleteTaskById(Integer id);
     TaskDto getTaskById(Integer id);
+    List<TaskDto> getAllArticles();
+    List<TaskDto> getAllTasksOrderByDateAsc();
+    List<TaskDto> getAllTasksOrderByDateDesc();
     List<TaskDto> getTasksByTopic(Topic topic);
     List<TaskDto> getTasksByAccount(AccountDto accountDto);
 }

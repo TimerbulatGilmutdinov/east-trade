@@ -9,6 +9,10 @@
 <body>
 <div class="container" th:each="article :${articles}">
     <h1 th:object="${article}" th:field="*{title}" th:inline="text"></h1>
+    <select name="priority" id="priority">
+        <option value="old">Old</option>
+        <option value="new">New</option>
+    </select>
 
     <div class="field">
         <label>Publish date:</label>
