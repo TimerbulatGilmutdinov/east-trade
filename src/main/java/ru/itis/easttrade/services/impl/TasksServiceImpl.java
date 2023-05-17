@@ -53,7 +53,8 @@ public class TasksServiceImpl implements TasksService {
         tasksRepository.findById(id).orElseThrow(()->new NotFoundException("Task with id <"+id+"> not found"));
         String newName = Jsoup.clean(taskDto.getName(), Safelist.basic());
         String newDescription = Jsoup.clean(taskDto.getDescription(),Safelist.basic());
-        tasksRepository.updateById(id, newName,newDescription);
+        Task.TaskState newState = taskDto.getState();
+        tasksRepository.updateById(id, newName,newDescription, newState);
     }
 
     @Override
@@ -88,7 +89,6 @@ public class TasksServiceImpl implements TasksService {
     public List<TaskDto> getAllTasksOrderByDateAsc() {
         return TaskDto.from(tasksRepository.findAllByOrderByPublishDateAsc());
     }
-
     @Override
     public List<TaskDto> getAllTasksOrderByDateDesc() {
         return TaskDto.from(tasksRepository.findAllByOrderByPublishDateDesc());

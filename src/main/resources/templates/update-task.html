@@ -26,9 +26,15 @@
             <option value="HOUSEWORK">Housework</option>
             <option value="REPAIR">Repair</option>
         </select>
+        <label for="state">State:</label>
+        <select name="state" id="state" th:value="${task.state}">
+            <option value="PENDING">Pending</option>
+            <option value="DISCUSSING">Discussing</option>
+            <option value="COMPLETED">Completed</option>
+        </select>
         <div class="form-group">
             <label for="description">Description:</label>
-            <textarea id="description" th:value="${task.description}" name="description"></textarea>
+            <textarea id="description" th:utext="${task.description}" name="description"></textarea>
         </div>
 
         <button type="submit">Save</button>

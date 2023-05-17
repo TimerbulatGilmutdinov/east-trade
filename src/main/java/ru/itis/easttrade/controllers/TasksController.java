@@ -75,7 +75,7 @@ public class TasksController {
         } else if (sort.equals("old")) {
             tasks = tasksService.getAllTasksOrderByDateDesc();
         } else {
-            tasks = tasksService.getAllTasksOrderByDateAsc();
+            tasks = tasksService.getAllTasksOrderByDateDesc();
         }
         model.addAttribute("tasks", tasks);
         return "tasks";

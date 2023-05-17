@@ -31,7 +31,7 @@ public class ArticlesController {
         } else if (sort.equals("old")) {
             articles = articlesService.getAllArticlesOrderByDateDesc();
         } else {
-            articles = articlesService.getAllArticlesOrderByDateAsc();
+            articles = articlesService.getAllArticlesOrderByDateDesc();
         }
         model.addAttribute("articles", articles);
         return "articles";

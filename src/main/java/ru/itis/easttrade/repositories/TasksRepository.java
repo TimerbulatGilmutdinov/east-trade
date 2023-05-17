@@ -21,6 +21,6 @@ public interface TasksRepository extends JpaRepository<Task, Integer> {
     List<Task> findAllByOrderByPublishDateDesc();
     List<Task> findAllByOrderByPublishDateAsc();
     @Modifying
-    @Query("UPDATE Task a SET a.name = :newName, a.description= :newDescription WHERE a.id = :id")
-    void updateById(@Param("id") Integer id, @Param("newName") String newName, @Param("newDescription") String newDescription);
+    @Query("UPDATE Task a SET a.name = :newName, a.description= :newDescription, a.state = :newState WHERE a.id = :id")
+    void updateById(@Param("id") Integer id, @Param("newName") String newName, @Param("newDescription") String newDescription, @Param("newState") Task.TaskState state);
 }
