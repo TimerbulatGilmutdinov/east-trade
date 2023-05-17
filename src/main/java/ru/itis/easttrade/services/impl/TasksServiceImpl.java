@@ -6,6 +6,7 @@ import org.jsoup.safety.Safelist;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import ru.itis.easttrade.dto.AccountDto;
+import ru.itis.easttrade.dto.ArticleDto;
 import ru.itis.easttrade.dto.NewOrUpdateTaskDto;
 import ru.itis.easttrade.dto.TaskDto;
 import ru.itis.easttrade.exceptions.NotFoundException;
@@ -78,5 +79,18 @@ public class TasksServiceImpl implements TasksService {
     public List<TaskDto> getTasksByAccount(@ModelAttribute AccountDto accountDto) {
         Account account = accountsRepository.findByEmail(accountDto.getEmail()).orElseThrow(() -> new NotFoundException("Account with email <" + accountDto.getEmail() + "> not found"));
         return TaskDto.from(tasksRepository.findAllByAccount(account));
+    }
+    @Override
+    public List<TaskDto> getAllArticles() {
+        return TaskDto.from(tasksRepository.findAll());
+    }
+    @Override
+    public List<TaskDto> getAllTasksOrderByDateAsc() {
+        return TaskDto.from(tasksRepository.findAllByOrderByPublishDateAsc());
+    }
+
+    @Override
+    public List<TaskDto> getAllTasksOrderByDateDesc() {
+        return TaskDto.from(tasksRepository.findAllByOrderByPublishDateDesc());
     }
 }

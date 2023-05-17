@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>All tasks</title>
+    <link rel="stylesheet" href="/static/css/my-tasks.css">
+</head>
+<body>
+<div class="container" th:each="task :${tasks}">
+    <h1 th:object="${task}" th:field="*{name}" th:inline="text"></h1>
+
+    <div class="field">
+        <label>Publish date:</label>
+        <p th:text="${task.publishDate}"></p>
+    </div>
+    <div class="field">
+        <label>Name of task:</label>
+        <a th:href="@{/tasks/{id}(id=${task.id})}"><p th:text="${task.name}"></p></a>
+    </div>
+</div>
+</body>
+</html>

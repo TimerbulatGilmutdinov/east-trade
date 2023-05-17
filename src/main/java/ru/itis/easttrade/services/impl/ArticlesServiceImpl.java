@@ -27,11 +27,12 @@ public class ArticlesServiceImpl implements ArticlesService {
     private final ArticlesRepository articlesRepository;
     private final AccountsRepository accountsRepository;
 
+    @Override
     public ArticleDto getArticleById(Integer id) {
         Article article = articlesRepository.findById(id).orElseThrow(() -> new NotFoundException("Article with id <" + id + "> not found"));
         return ArticleDto.from(article);
     }
-
+    @Override
     public ArticleDto getArticleByTitle(String title) {
         Article article = articlesRepository.findByTitle(title).orElseThrow(() -> new NotFoundException("Article with title <" + title + "> not found"));
         return ArticleDto.from(article);
@@ -43,14 +44,15 @@ public class ArticlesServiceImpl implements ArticlesService {
         return ArticleDto.from(articlesRepository.findAllByAccount(account));
     }
 
+    @Override
     public List<ArticleDto> getAllArticles() {
         return ArticleDto.from(articlesRepository.findAll());
     }
-
+    @Override
     public List<ArticleDto> getAllArticlesOrderByDateAsc() {
         return ArticleDto.from(articlesRepository.findAllByOrderByPublishDateAsc());
     }
-
+    @Override
     public List<ArticleDto> getAllArticlesOrderByDateDesc() {
         return ArticleDto.from(articlesRepository.findAllByOrderByPublishDateDesc());
     }

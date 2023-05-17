@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import ru.itis.easttrade.dto.AccountDto;
+import ru.itis.easttrade.dto.ArticleDto;
 import ru.itis.easttrade.dto.NewOrUpdateTaskDto;
 import ru.itis.easttrade.dto.TaskDto;
 import ru.itis.easttrade.services.AccountsService;
@@ -64,5 +65,19 @@ public class TasksController {
     public String updateTask(@PathVariable("id") Integer id, @ModelAttribute NewOrUpdateTaskDto taskDto){
         tasksService.updateTask(id,taskDto);
         return "redirect:"+MvcUriComponentsBuilder.fromMappingName("TC#getTaskById").arg(0,id).build();
+    }
+
+    @GetMapping("/tasks")
+    public String getAllTasks(@RequestParam(value = "sortBy",defaultValue = "new") String sort, Model model){
+        List<TaskDto> tasks;
+        if (sort.equals("new")) {
+            tasks = tasksService.getAllTasksOrderByDateAsc();
+        } else if (sort.equals("old")) {
+            tasks = tasksService.getAllTasksOrderByDateDesc();
+        } else {
+            tasks = tasksService.getAllTasksOrderByDateAsc();
+        }
+        model.addAttribute("tasks", tasks);
+        return "tasks";
     }
 }

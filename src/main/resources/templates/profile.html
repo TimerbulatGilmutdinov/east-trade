@@ -12,8 +12,14 @@
 <div class="container target" th:object="${account}">
     <div class="row">
         <div class="col-sm-10">
-            <a th:href="@{/create-task}"><button th:href="@{/create-task}" type="button" class="btn btn-success">Create new task</button></a>
-            <a th:href="@{/create-article}"><button th:href="@{/create-article}" type="button" class="btn btn-info">Create new article</button></a>
+            <a th:href="@{/create-task}"><button type="button" class="btn btn-primary">Create new task</button></a>
+            <a th:href="@{/create-article}"><button type="button" class="btn btn-primary">Create new article</button></a>
+            <a th:href="@{/my-tasks}"><button type="button" class="btn btn-primary">My tasks</button></a>
+            <a th:href="@{/my-articles}"><button type="button" class="btn btn-primary">My articles</button></a>
+            <a th:href="@{/tasks}"><button type="button" class="btn btn-primary">All tasks</button></a>
+            <a th:href="@{/articles}"><button type="button" class="btn btn-primary">All articles</button></a>
+
+
             <br>
         </div>
         <div class="col-sm-2"><a href="/users" class="pull-right">
