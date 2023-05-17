@@ -30,7 +30,7 @@
         <label>State:</label>
         <p th:text="${task.state}"></p>
     </div>
-    <a th:href="@{/tasks/id/update (id=${task.id})}" class="button">Edit</a>
+    <a th:href="@{/tasks/{id}/update (id=${task.id})}" class="button">Edit</a>
     <a class="button" th:attr="onclick='deleteTask(' + ${task.id} + ')'">Delete</a>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

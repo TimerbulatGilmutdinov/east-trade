@@ -26,7 +26,7 @@
         <label>Content:</label>
         <p th:utext="${article.content}"></p>
     </div>
-    <a th:href="@{/articles/id/update (id=${article.id})}" class="button">Edit</a>
+    <a th:href="@{/articles/{id}/update (id=${article.id})}" class="button">Edit</a>
     <a class="button" th:attr="onclick='deleteArticle(' + ${article.id} + ')'">Delete</a>
 </div>
 
