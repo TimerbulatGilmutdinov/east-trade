@@ -5,7 +5,6 @@ public class ModelAttributeValidationException extends RuntimeException {
         super(message);
     }
 
-
     public ModelAttributeValidationException(String message, Throwable cause) {
         super(message, cause);
     }
