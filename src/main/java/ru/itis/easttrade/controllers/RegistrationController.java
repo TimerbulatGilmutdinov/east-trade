@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
-import ru.itis.easttrade.dto.NewOrUpdateAccountDto;
+import ru.itis.easttrade.dto.UpdateAccountDto;
 import ru.itis.easttrade.exceptions.ModelAttributeValidationException;
 import ru.itis.easttrade.services.AccountsService;
 
@@ -19,12 +19,12 @@ public class RegistrationController {
 
     @GetMapping("/registration")
     public String getRegistration(Model model) {
-        model.addAttribute("account", new NewOrUpdateAccountDto());
+        model.addAttribute("account", new UpdateAccountDto());
         return "registration";
     }
 
     @PostMapping("/registration")
-    public String postRegistration(@ModelAttribute("account") NewOrUpdateAccountDto accountDto, BindingResult bindingResult, Model model) {
+    public String postRegistration(@ModelAttribute("account") UpdateAccountDto accountDto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("account",accountDto);
             throw new ModelAttributeValidationException("Validation exception");

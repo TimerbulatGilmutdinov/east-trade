@@ -20,6 +20,8 @@ public interface TasksRepository extends JpaRepository<Task, Integer> {
     List<Task> findAllByAccount(Account account);
     List<Task> findAllByOrderByPublishDateDesc();
     List<Task> findAllByOrderByPublishDateAsc();
+    @Query("from Task a where a.id = (select max(price) from Task)")
+    Task findMostExpensive();
     @Modifying
     @Query("UPDATE Task a SET a.name = :newName, a.description= :newDescription, a.state = :newState WHERE a.id = :id")
     void updateById(@Param("id") Integer id, @Param("newName") String newName, @Param("newDescription") String newDescription, @Param("newState") Task.TaskState state);

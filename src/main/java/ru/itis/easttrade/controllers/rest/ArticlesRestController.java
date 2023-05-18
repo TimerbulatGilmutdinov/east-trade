@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.itis.easttrade.controllers.rest.api.ArticlesApi;
 import ru.itis.easttrade.dto.ArticleDto;
-import ru.itis.easttrade.dto.NewOrUpdateArticleDto;
+import ru.itis.easttrade.dto.UpdateArticleDto;
 import ru.itis.easttrade.services.ArticlesService;
 
 import java.security.Principal;
@@ -29,7 +29,7 @@ public class ArticlesRestController implements ArticlesApi {
     }
 
     @Override
-    public ResponseEntity<ArticleDto> updateArticleById(Integer id,@RequestBody NewOrUpdateArticleDto updatedArticle) {
+    public ResponseEntity<ArticleDto> updateArticleById(Integer id,@RequestBody UpdateArticleDto updatedArticle) {
         articlesService.updateArticleById(id, updatedArticle);
         return ResponseEntity.accepted()
                 .body(articlesService.getArticleById(id));

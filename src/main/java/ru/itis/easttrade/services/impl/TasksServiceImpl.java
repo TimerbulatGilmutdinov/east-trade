@@ -6,8 +6,7 @@ import org.jsoup.safety.Safelist;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import ru.itis.easttrade.dto.AccountDto;
-import ru.itis.easttrade.dto.ArticleDto;
-import ru.itis.easttrade.dto.NewOrUpdateTaskDto;
+import ru.itis.easttrade.dto.UpdateTaskDto;
 import ru.itis.easttrade.dto.TaskDto;
 import ru.itis.easttrade.exceptions.NotFoundException;
 import ru.itis.easttrade.models.Account;
@@ -31,7 +30,7 @@ public class TasksServiceImpl implements TasksService {
 
     @Override
     @Transactional
-    public TaskDto saveTask(@ModelAttribute NewOrUpdateTaskDto taskDto, Principal principal) {
+    public TaskDto saveTask(@ModelAttribute UpdateTaskDto taskDto, Principal principal) {
         String email = principal.getName();
         Account account = accountsRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("Account with email <" + email + "> not found"));
         Task newTask = Task.builder()
@@ -49,7 +48,7 @@ public class TasksServiceImpl implements TasksService {
 
     @Override
     @Transactional
-    public void updateTask(Integer id, @ModelAttribute NewOrUpdateTaskDto taskDto) {
+    public void updateTask(Integer id, @ModelAttribute UpdateTaskDto taskDto) {
         tasksRepository.findById(id).orElseThrow(()->new NotFoundException("Task with id <"+id+"> not found"));
         String newName = Jsoup.clean(taskDto.getName(), Safelist.basic());
         String newDescription = Jsoup.clean(taskDto.getDescription(),Safelist.basic());

@@ -1,14 +1,12 @@
 package ru.itis.easttrade.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import ru.itis.easttrade.dto.AccountDto;
-import ru.itis.easttrade.dto.ArticleDto;
-import ru.itis.easttrade.dto.NewOrUpdateTaskDto;
+import ru.itis.easttrade.dto.UpdateTaskDto;
 import ru.itis.easttrade.dto.TaskDto;
 import ru.itis.easttrade.services.AccountsService;
 import ru.itis.easttrade.services.TasksService;
@@ -31,12 +29,12 @@ public class TasksController {
 
     @GetMapping("/create-task")
     public String getCreateTask(Model model){
-        model.addAttribute("task", new NewOrUpdateTaskDto());
+        model.addAttribute("task", new UpdateTaskDto());
         return "create-task";
     }
 
     @PostMapping("/create-task")
-    public String createTask(@ModelAttribute("task") NewOrUpdateTaskDto taskDto, Principal principal){
+    public String createTask(@ModelAttribute("task") UpdateTaskDto taskDto, Principal principal){
         int id = tasksService.saveTask(taskDto, principal).getId();
         return "redirect:"+ MvcUriComponentsBuilder.fromMappingName("TC#getTaskById").arg(0,id).build();
     }
@@ -62,7 +60,7 @@ public class TasksController {
     }
 
     @PostMapping("/tasks/{id}/update")
-    public String updateTask(@PathVariable("id") Integer id, @ModelAttribute NewOrUpdateTaskDto taskDto){
+    public String updateTask(@PathVariable("id") Integer id, @ModelAttribute UpdateTaskDto taskDto){
         tasksService.updateTask(id,taskDto);
         return "redirect:"+MvcUriComponentsBuilder.fromMappingName("TC#getTaskById").arg(0,id).build();
     }

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import ru.itis.easttrade.dto.AccountDto;
 import ru.itis.easttrade.dto.ArticleDto;
-import ru.itis.easttrade.dto.NewOrUpdateArticleDto;
+import ru.itis.easttrade.dto.UpdateArticleDto;
 import ru.itis.easttrade.exceptions.NotFoundException;
 import ru.itis.easttrade.models.Account;
 import ru.itis.easttrade.models.Article;
@@ -19,7 +19,6 @@ import javax.transaction.Transactional;
 import java.security.Principal;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -58,7 +57,7 @@ public class ArticlesServiceImpl implements ArticlesService {
     }
 
     @Transactional
-    public void updateArticleById(Integer id, @ModelAttribute NewOrUpdateArticleDto article) {
+    public void updateArticleById(Integer id, @ModelAttribute UpdateArticleDto article) {
         articlesRepository.findById(id).orElseThrow(()->new NotFoundException("Article with id <"+id+"> not found"));
         String newTitle = Jsoup.clean(article.getTitle(),Safelist.basic());
         String newContent = Jsoup.clean(article.getContent(),Safelist.basic());

@@ -7,8 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import ru.itis.easttrade.dto.AccountDto;
 import ru.itis.easttrade.dto.ArticleDto;
-import ru.itis.easttrade.dto.NewOrUpdateArticleDto;
-import ru.itis.easttrade.dto.TaskDto;
+import ru.itis.easttrade.dto.UpdateArticleDto;
 import ru.itis.easttrade.services.AccountsService;
 import ru.itis.easttrade.services.ArticlesService;
 import ru.itis.easttrade.services.TasksService;
@@ -52,7 +51,7 @@ public class ArticlesController {
 
     @GetMapping("/create-article")
     public String getCreateArticle(Model model) {
-        model.addAttribute("article", new NewOrUpdateArticleDto());
+        model.addAttribute("article", new UpdateArticleDto());
         return "create-article";
     }
 
@@ -69,7 +68,7 @@ public class ArticlesController {
     }
 
     @PostMapping("/articles/{id}/update")
-    public String updateArticle(@PathVariable("id") Integer id, @ModelAttribute("article") NewOrUpdateArticleDto articleDto, Model model) {
+    public String updateArticle(@PathVariable("id") Integer id, @ModelAttribute("article") UpdateArticleDto articleDto, Model model) {
         articlesService.updateArticleById(id, articleDto);
         return "redirect:"+MvcUriComponentsBuilder.fromMappingName("AC#getArticleById").arg(0,id).build();
     }

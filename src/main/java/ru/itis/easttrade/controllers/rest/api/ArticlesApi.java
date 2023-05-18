@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.itis.easttrade.dto.ArticleDto;
 import ru.itis.easttrade.dto.ExceptionDto;
-import ru.itis.easttrade.dto.NewOrUpdateArticleDto;
+import ru.itis.easttrade.dto.UpdateArticleDto;
 
 import java.security.Principal;
 
@@ -76,7 +76,7 @@ public interface ArticlesApi {
     @PostMapping("/api/articles/{id}/update")
     ResponseEntity<ArticleDto> updateArticleById(
             @Parameter(description = "Article's id", example = "123") @PathVariable("id") Integer id,
-            @RequestBody NewOrUpdateArticleDto updatedArticle);
+            @RequestBody UpdateArticleDto updatedArticle);
 
     @Operation(summary = "Removing article")
     @ApiResponses(value = {

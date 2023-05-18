@@ -14,7 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Data
 @Builder
-public class NewOrUpdateTaskDto {
+public class UpdateTaskDto {
     private Integer id;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

@@ -5,7 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import ru.itis.easttrade.dto.AccountDto;
-import ru.itis.easttrade.dto.NewOrUpdateAccountDto;
+import ru.itis.easttrade.dto.UpdateAccountDto;
 import ru.itis.easttrade.exceptions.AlreadyExistsException;
 import ru.itis.easttrade.exceptions.NotFoundException;
 import ru.itis.easttrade.models.Account;
@@ -27,7 +27,7 @@ public class AccountsServiceImpl implements AccountsService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public AccountDto addAccount(@Valid @ModelAttribute NewOrUpdateAccountDto accountDto) {
+    public AccountDto addAccount(@Valid @ModelAttribute UpdateAccountDto accountDto) {
         Optional<Account> accountByEmail = accountsRepository.findByEmail(accountDto.getEmail());
         if (accountByEmail.isPresent()) {
             throw new AlreadyExistsException("Account with email <" + accountDto.getEmail() + "> already exists", accountDto);
@@ -51,7 +51,7 @@ public class AccountsServiceImpl implements AccountsService {
     }
 
     @Override
-    public AccountDto updateAccount(Integer id, NewOrUpdateAccountDto updatedAccount) {
+    public AccountDto updateAccount(Integer id, UpdateAccountDto updatedAccount) {
         Account accountForUpdate = accountsRepository.findById(id).orElseThrow(() -> new NotFoundException("Account with id <" + id + "> not found"));
 
         accountForUpdate.setEmail(updatedAccount.getEmail());

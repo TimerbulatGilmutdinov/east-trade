@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @Builder
 @Schema(description = "Новый аккаунт/изменение аккаунта")
-public class NewOrUpdateAccountDto {
+public class UpdateAccountDto {
     @Schema(description = "Email", example = "example@mail.ru")
     @NotNull(message = "{dto.null}")
     @Email(regexp = "^[\\w\\-\\.]+@[\\w-]+\\.[\\w-]{2,4}$", message = "{account.email.pattern}")

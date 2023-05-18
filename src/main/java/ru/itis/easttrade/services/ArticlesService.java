@@ -3,7 +3,7 @@ package ru.itis.easttrade.services;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.itis.easttrade.dto.AccountDto;
 import ru.itis.easttrade.dto.ArticleDto;
-import ru.itis.easttrade.dto.NewOrUpdateArticleDto;
+import ru.itis.easttrade.dto.UpdateArticleDto;
 
 import java.security.Principal;
 import java.util.List;
@@ -20,7 +20,7 @@ public interface ArticlesService {
 
     List<ArticleDto> getAllArticlesOrderByDateDesc();
 
-    void updateArticleById(@RequestParam("id") Integer id, NewOrUpdateArticleDto article);
+    void updateArticleById(@RequestParam("id") Integer id, UpdateArticleDto article);
 
     ArticleDto saveArticle(ArticleDto articleDto, Principal principal);
 
