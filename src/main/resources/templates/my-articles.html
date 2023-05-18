@@ -32,18 +32,7 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<script>
-    function deleteArticle(taskId) {
-        if (confirm("Are you sure you want to delete this article?")) {
-            $.ajax({
-                url: "/articles/" + taskId,
-                method: "DELETE",
-                success: function (result) {
-                    location.reload();
-                }
-            });
-        }
-    }
+<script src="/static/js/my-articles.js">
 </script>
 </body>
 </html>
