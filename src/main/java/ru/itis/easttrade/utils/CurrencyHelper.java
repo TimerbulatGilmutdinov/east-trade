@@ -20,6 +20,7 @@ public class CurrencyHelper {
 
         Request request = new Request.Builder()
                 .url(CURRENCY_API_URL)
+                .header("Content-type","application/json;charset=UTF-8")
                 .build();
 
         double value = 0;
