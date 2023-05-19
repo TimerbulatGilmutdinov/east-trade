@@ -34,6 +34,11 @@ ul {
 li {
     padding: 10px;
     border-bottom: 1px solid #e9ebee;
+    cursor: pointer;
+}
+
+li:hover {
+    background-color: #ccc;
 }
 
 .error {
