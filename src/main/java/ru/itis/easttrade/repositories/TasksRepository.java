@@ -20,6 +20,8 @@ public interface TasksRepository extends JpaRepository<Task, Integer> {
     List<Task> findAllByAccount(Account account);
     List<Task> findAllByOrderByPublishDateDesc();
     List<Task> findAllByOrderByPublishDateAsc();
+    @Query(value = "select * from tasks a where a.topic=(select topic from tasks group by topic order by count(*) desc limit 1)", nativeQuery = true)
+    List<Task> findAllByMostPopularTopic();
     @Query("from Task a where a.id = (select max(price) from Task)")
     Task findMostExpensive();
     @Modifying
