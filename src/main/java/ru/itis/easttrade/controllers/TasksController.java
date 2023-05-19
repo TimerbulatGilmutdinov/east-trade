@@ -76,10 +76,10 @@ public class TasksController {
         if (sort.equals("old")) {
             tasks.sort(Comparator.comparing(TaskDto::getPublishDate));
         }
-        if(topic==null||topic.name().equals("ALL")){
-            model.addAttribute("topic","ALL");
+        if (topic == null || topic.name().equals("ALL")) {
+            model.addAttribute("topic", "ALL");
         } else {
-            tasks = tasksService.getSortedTasksByTopic(tasks,topic);
+            tasks = tasksService.getSortedTasksByTopic(tasks, topic);
             model.addAttribute("topic", topic.name());
         }
         model.addAttribute("sorted", sort);

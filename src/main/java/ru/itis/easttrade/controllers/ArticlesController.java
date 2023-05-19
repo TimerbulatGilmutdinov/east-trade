@@ -13,6 +13,7 @@ import ru.itis.easttrade.services.ArticlesService;
 import ru.itis.easttrade.services.TasksService;
 
 import java.security.Principal;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -23,15 +24,12 @@ public class ArticlesController {
     private final ArticlesService articlesService;
 
     @GetMapping("/articles")
-    public String getAllArticles(@RequestParam(value = "sortBy",defaultValue = "new") String sort, Model model) {
-        List<ArticleDto> articles;
-        if (sort.equals("new")) {
-            articles = articlesService.getAllArticlesOrderByDateAsc();
-        } else if (sort.equals("old")) {
-            articles = articlesService.getAllArticlesOrderByDateDesc();
-        } else {
-            articles = articlesService.getAllArticlesOrderByDateDesc();
+    public String getAllArticles(@RequestParam(name = "sort",defaultValue = "new") String sort, Model model) {
+        List<ArticleDto> articles = articlesService.getAllArticlesOrderByDateDesc();
+        if (sort.equals("old")) {
+            articles.sort(Comparator.comparing(ArticleDto::getPublishDate));
         }
+        model.addAttribute("sorted",sort);
         model.addAttribute("articles", articles);
         return "articles";
     }

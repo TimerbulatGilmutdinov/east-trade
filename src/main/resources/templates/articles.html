@@ -7,6 +7,16 @@
     <link rel="stylesheet" href="/static/css/my-tasks.css">
 </head>
 <body>
+<div class="container">
+    <div class="sorting">
+        <label>Sort by:</label>
+        <select id="sortSelect" onchange="sortTasks()">
+            <option value="new" th:selected="${sorted == 'new'}">Newest First</option>
+            <option value="old" th:selected="${sorted == 'old'}">Oldest First</option>
+        </select>
+    </div>
+
+</div>
 <div class="container" th:each="article :${articles}">
     <h1 th:object="${article}" th:field="*{title}" th:inline="text"></h1>
 
@@ -19,5 +29,13 @@
         <a th:href="@{/articles/{id}(id=${article.id})}"><p th:text="${article.title}"></p></a>
     </div>
 </div>
+<script>
+    function sortTasks() {
+        let timeSelect = document.getElementById("sortSelect");
+        let timeSelectedValue = timeSelect.value;
+
+        window.location.href = "/articles?sort=" + timeSelectedValue;
+    }
+</script>
 </body>
 </html>
