@@ -7,17 +7,55 @@
     <link rel="stylesheet" href="/static/css/my-tasks.css">
 </head>
 <body>
-<div class="container" th:each="task :${tasks}">
-    <h1 th:object="${task}" th:field="*{name}" th:inline="text"></h1>
+<div class="container">
+    <div class="sorting">
+        <label>Sort by:</label>
+        <select id="sortSelect" onchange="sortTasks()">
+            <option value="new" th:selected="${sorted == 'new'}">Newest First</option>
+            <option value="old" th:selected="${sorted == 'old'}">Oldest First</option>
+        </select>
 
-    <div class="field">
-        <label>Publish date:</label>
-        <p th:text="${task.publishDate}"></p>
+        <label>Topic:</label>
+        <select id="topicSelect" onchange="sortTasks()">
+            <option value="ALL" th:selected="${topic == 'ALL'}">All</option>
+            <option value="CONSTRUCTION" th:selected="${topic == 'CONSTRUCTION'}">Construction</option>
+            <option value="EDUCATION" th:selected="${topic == 'EDUCATION'}">Education</option>
+            <option value="LAND_WORK" th:selected="${topic == 'LAND_WORK'}">Land work</option>
+            <option value="LOADING" th:selected="${topic == 'LOADING'}">Loading</option>
+            <option value="HOUSEWORK" th:selected="${topic == 'HOUSEWORK'}">House work</option>
+            <option value="REPAIR" th:selected="${topic == 'REPAIR'}">Repair</option>
+        </select>
     </div>
-    <div class="field">
-        <label>Name of task:</label>
-        <a th:href="@{/tasks/{id}(id=${task.id})}"><p th:text="${task.name}"></p></a>
+
+</div>
+<div class="container" th:each="task :${tasks}">
+
+    <div>
+        <h1 th:object="${task}" th:field="*{name}" th:inline="text"></h1>
+
+        <div class="field">
+            <label>Publish date:</label>
+            <p th:text="${task.publishDate}"></p>
+        </div>
+        <div class="field">
+            <label>Name of task:</label>
+            <a th:href="@{/tasks/{id}(id=${task.id})}"><p th:text="${task.name}"></p></a>
+        </div>
     </div>
 </div>
+<script>
+    function sortTasks() {
+        let timeSelect = document.getElementById("sortSelect");
+        let timeSelectedValue = timeSelect.value;
+        let topicSelect = document.getElementById("topicSelect");
+        let topicSelectedValue = topicSelect.value;
+
+        if (topicSelectedValue === "ALL") {
+            window.location.href = "/tasks?sort=" + timeSelectedValue;
+        } else {
+            window.location.href = "tasks?sort="+timeSelectedValue+"&topic="+topicSelectedValue;
+        }
+    }
+</script>
 </body>
 </html>

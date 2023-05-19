@@ -21,6 +21,7 @@ import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -49,17 +50,17 @@ public class TasksServiceImpl implements TasksService {
     @Override
     @Transactional
     public void updateTask(Integer id, @ModelAttribute UpdateTaskDto taskDto) {
-        tasksRepository.findById(id).orElseThrow(()->new NotFoundException("Task with id <"+id+"> not found"));
+        tasksRepository.findById(id).orElseThrow(() -> new NotFoundException("Task with id <" + id + "> not found"));
         String newName = Jsoup.clean(taskDto.getName(), Safelist.basic());
-        String newDescription = Jsoup.clean(taskDto.getDescription(),Safelist.basic());
+        String newDescription = Jsoup.clean(taskDto.getDescription(), Safelist.basic());
         Task.TaskState newState = taskDto.getState();
-        tasksRepository.updateById(id, newName,newDescription, newState);
+        tasksRepository.updateById(id, newName, newDescription, newState);
     }
 
     @Override
     @Transactional
     public void deleteTaskById(Integer id) {
-        tasksRepository.findById(id).orElseThrow(()->new NotFoundException("Task with id <"+id+"> not found"));
+        tasksRepository.findById(id).orElseThrow(() -> new NotFoundException("Task with id <" + id + "> not found"));
         tasksRepository.deleteById(id);
     }
 
@@ -80,16 +81,30 @@ public class TasksServiceImpl implements TasksService {
         Account account = accountsRepository.findByEmail(accountDto.getEmail()).orElseThrow(() -> new NotFoundException("Account with email <" + accountDto.getEmail() + "> not found"));
         return TaskDto.from(tasksRepository.findAllByAccount(account));
     }
+
     @Override
     public List<TaskDto> getAllArticles() {
         return TaskDto.from(tasksRepository.findAll());
     }
+
     @Override
     public List<TaskDto> getAllTasksOrderByDateAsc() {
         return TaskDto.from(tasksRepository.findAllByOrderByPublishDateAsc());
     }
+
     @Override
     public List<TaskDto> getAllTasksOrderByDateDesc() {
         return TaskDto.from(tasksRepository.findAllByOrderByPublishDateDesc());
+    }
+
+    @Override
+    public List<TaskDto> getAllTasks() {
+        return TaskDto.from(tasksRepository.findAll());
+    }
+
+    @Override
+    public List<TaskDto> getSortedTasksByTopic(List<TaskDto> tasks, Topic topic) {
+        List<TaskDto> list = tasks.stream().filter(e -> e.getTopic().equals(topic)).collect(Collectors.toList());
+        return list;
     }
 }
