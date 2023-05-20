@@ -13,11 +13,11 @@ import org.springframework.security.core.GrantedAuthority;
 @NoArgsConstructor
 public class Role implements GrantedAuthority {
     @Transient
-    public static final String ADMIN = "ADMIN";
+    public static final String ADMIN = "ROLE_ADMIN";
     @Transient
-    public static final String USER = "USER";
+    public static final String USER = "ROLE_USER";
     @Transient
-    public static final String MODERATOR = "MODERATOR";
+    public static final String MODERATOR = "ROLE_MODERATOR";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
