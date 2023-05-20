@@ -16,31 +16,31 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @Builder
 @Schema(description = "Новый аккаунт/изменение аккаунта")
-public class UpdateAccountDto {
+public class NewOrUpdateAccountDto {
     @Schema(description = "Email", example = "example@mail.ru")
-    @NotNull(message = "{dto.null}")
-    @Email(regexp = "^[\\w\\-\\.]+@[\\w-]+\\.[\\w-]{2,4}$", message = "{account.email.pattern}")
+    @NotNull(message = "Cannot be empty")
+    @Email(regexp = "^[\\w\\-\\.]+@[\\w-]+\\.[\\w-]{2,4}$", message = "Invalid email password")
     private String email;
 
     @Schema(description = "Name", example = "Alex")
-    @NotNull(message = "{dto.null}")
-    @Size(min = 5, max = 32, message = "{account.name.size}")
+    @NotNull(message = "Cannot be empty")
+    @Size(min = 2, max = 32, message = "Name should have size of 2-32")
     private String name;
 
     @Schema(description = "Surname", example = "Jones")
-    @NotNull(message = "{dto.null}")
-    @Size(min = 5, max = 32, message = "{account.surname.size}")
+    @NotNull(message = "Cannot be empty")
+    @Size(min = 2, max = 32, message = "Surname should have size of 2-32")
     private String surname;
 
     @Schema(description = "Password", example = "qwerty007")
-    @NotNull(message = "{dto.null}")
-    @Size(min = 8, max = 40, message = "{account.password.size}")
+    @NotNull(message = "Cannot be empty")
+    @Size(min = 8, max = 40, message = "Password should have size of 8-40")
     private String password;
 
     @Schema(description = "Phone number", example = "89271112233")
-    @NotNull(message = "{dto.null}")
-    @Size(min = 11, max = 11, message = "{account.phoneNumber.size}")
-    @Pattern(regexp = "^[0-9]{11}$")
+    @NotNull(message = "Cannot be empty")
+    @Size(min = 11, max = 11, message = "Should have size of 11")
+    @Pattern(regexp = "^[0-9]{11}$", message = "Invalid phone number pattern")
     private String phoneNumber;
 
 }

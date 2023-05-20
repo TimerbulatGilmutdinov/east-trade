@@ -2,11 +2,11 @@ package ru.itis.easttrade.services;
 
 
 import ru.itis.easttrade.dto.AccountDto;
-import ru.itis.easttrade.dto.UpdateAccountDto;
+import ru.itis.easttrade.dto.NewOrUpdateAccountDto;
 
 public interface AccountsService {
-    AccountDto addAccount(UpdateAccountDto accountDto);
-    AccountDto updateAccount(Integer id, UpdateAccountDto updatedAccount);
+    AccountDto addAccount(NewOrUpdateAccountDto accountDto);
+    AccountDto updateAccount(Integer id, NewOrUpdateAccountDto updatedAccount);
     AccountDto banAccountById(Integer id);
     AccountDto banAccountByEmail(String email);
     AccountDto deleteAccountById(Integer id);

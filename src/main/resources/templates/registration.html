@@ -8,9 +8,12 @@
 <body>
 <h2>Registration</h2>
 <form name="registration-form" th:action="@{/registration}" method="post" th:object="${account}">
-    <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+<!--    <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>-->
     <div th:if="${not #strings.isEmpty(errorMessage)}" class="alert alert-info">
         <p th:text="${errorMessage}"></p>
+    </div>
+    <div th:if="${not #strings.isEmpty(validationErrors)}" class="alert alert-info">
+        <p th:text="${validationErrors}"></p>
     </div>
     <div>
         <input type="email" id="email" name="email" placeholder="Email" th:field="*{email}" required>
