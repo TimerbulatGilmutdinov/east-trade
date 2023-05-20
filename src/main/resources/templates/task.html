@@ -41,6 +41,9 @@
         <a th:href="@{'/tasks/'+${task.id}+'/update'}">
             <button type="submit">Edit</button>
         </a>
+        <a class="button" th:attr="onclick='deleteTask(' + ${task.id} + ')'">
+            <button type="submit">Delete</button>
+        </a>
     </div>
 
     <a th:href="@{/profile}">
@@ -48,4 +51,7 @@
     </a>
 </div>
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="/static/js/task.js"></script>
 </html>
