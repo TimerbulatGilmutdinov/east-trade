@@ -1,11 +1,13 @@
 package ru.itis.easttrade.aspects;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.client.HttpServerErrorException;
+import ru.itis.easttrade.dto.ExceptionDto;
 import ru.itis.easttrade.exceptions.AlreadyExistsException;
 import ru.itis.easttrade.exceptions.NotFoundException;
 
@@ -31,4 +33,13 @@ public class ExceptionsHandler {
     public String handleInternalServerError(){
         return "error";
     }
+
+//    @ExceptionHandler(NotFoundException.class)
+//    public ResponseEntity<ExceptionDto> handleNotFound(NotFoundException ex) {
+//        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+//                .body(ExceptionDto.builder()
+//                        .message(ex.getMessage())
+//                        .status(HttpStatus.NOT_FOUND.value())
+//                        .build());
+//    }
 }
