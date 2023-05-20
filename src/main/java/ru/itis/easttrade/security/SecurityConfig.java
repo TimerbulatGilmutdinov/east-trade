@@ -25,10 +25,8 @@ public class SecurityConfig  {
         httpSecurity
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/").permitAll()
-                .antMatchers("/welcome").permitAll()
+                .antMatchers("/","/welcome","/articles","/tasks").permitAll()
                 .antMatchers("/profile").authenticated()
-                .antMatchers("/news").authenticated()
                 .antMatchers("/create-task", "/create-article").authenticated()
                 .antMatchers("/my-tasks", "/my-articles").authenticated()
                 .and()
