@@ -14,6 +14,7 @@ import ru.itis.easttrade.models.Topic;
 import ru.itis.easttrade.repositories.TasksRepository;
 import ru.itis.easttrade.services.AccountsService;
 import ru.itis.easttrade.services.TasksService;
+import ru.itis.easttrade.utils.RoleChecker;
 
 import java.security.Principal;
 import java.util.Comparator;
@@ -24,12 +25,14 @@ import java.util.List;
 public class TasksController {
     private final TasksService tasksService;
     private final AccountsService accountsService;
-    private final TasksRepository tasksRepository;
+    private final RoleChecker roleChecker;
+
 
     @GetMapping("/tasks/{id}")
     public String getTaskById(@PathVariable("id") Integer id, Model model, Authentication authentication) {
         TaskDto task = tasksService.getTaskById(id);
         model.addAttribute("authentication",authentication);
+        model.addAttribute("hasEnoughAuthority", roleChecker.hasEnoughAuthority(authentication));
         model.addAttribute("task", task);
         return "task";
     }
@@ -87,11 +90,5 @@ public class TasksController {
         model.addAttribute("sorted", sort);
         model.addAttribute("tasks", tasks);
         return "tasks";
-    }
-
-    @GetMapping("/test")
-    @ResponseBody
-    public List<Task> test() {
-        return tasksRepository.findAllByMostPopularTopic();
     }
 }

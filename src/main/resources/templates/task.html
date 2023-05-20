@@ -37,7 +37,7 @@
         <label>Состояние:</label>
         <p th:text="${task.state}"></p>
     </div>
-    <div th:if="${authentication!=null&&task.accountEmail==authentication.name}">
+    <div th:if="${authentication!=null&&(task.accountEmail==authentication.name||hasEnoughAuthority)}">
         <a th:href="@{'/tasks/'+${task.id}+'/update'}">
             <button type="submit">Edit</button>
         </a>
