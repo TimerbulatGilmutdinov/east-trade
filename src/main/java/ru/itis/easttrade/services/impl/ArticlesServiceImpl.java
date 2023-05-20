@@ -3,6 +3,7 @@ package ru.itis.easttrade.services.impl;
 import lombok.RequiredArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Safelist;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,6 +16,7 @@ import ru.itis.easttrade.models.Article;
 import ru.itis.easttrade.repositories.AccountsRepository;
 import ru.itis.easttrade.repositories.ArticlesRepository;
 import ru.itis.easttrade.services.ArticlesService;
+import ru.itis.easttrade.utils.RightsResolver;
 
 import javax.transaction.Transactional;
 import java.security.Principal;
@@ -26,12 +28,14 @@ import java.util.List;
 public class ArticlesServiceImpl implements ArticlesService {
     private final ArticlesRepository articlesRepository;
     private final AccountsRepository accountsRepository;
+    private final RightsResolver rightsResolver;
 
     @Override
     public ArticleDto getArticleById(Integer id) {
         Article article = articlesRepository.findById(id).orElseThrow(() -> new NotFoundException("Article with id <" + id + "> not found"));
         return ArticleDto.from(article);
     }
+
     @Override
     public ArticleDto getArticleByTitle(String title) {
         Article article = articlesRepository.findByTitle(title).orElseThrow(() -> new NotFoundException("Article with title <" + title + "> not found"));
@@ -48,21 +52,27 @@ public class ArticlesServiceImpl implements ArticlesService {
     public List<ArticleDto> getAllArticles() {
         return ArticleDto.from(articlesRepository.findAll());
     }
+
     @Override
     public List<ArticleDto> getAllArticlesOrderByDateAsc() {
         return ArticleDto.from(articlesRepository.findAllByOrderByPublishDateAsc());
     }
+
     @Override
     public List<ArticleDto> getAllArticlesOrderByDateDesc() {
         return ArticleDto.from(articlesRepository.findAllByOrderByPublishDateDesc());
     }
 
     @Transactional
-    public void updateArticleById(Integer id, @ModelAttribute UpdateArticleDto article) {
-        articlesRepository.findById(id).orElseThrow(()->new NotFoundException("Article with id <"+id+"> not found"));
-        String newTitle = Jsoup.clean(article.getTitle(),Safelist.basic());
-        String newContent = Jsoup.clean(article.getContent(),Safelist.basic());
-        articlesRepository.updateById(id, newTitle, newContent);
+    public void updateArticleById(Integer id, @ModelAttribute UpdateArticleDto article, Authentication authentication) {
+        articlesRepository.findById(id).orElseThrow(() -> new NotFoundException("Article with id <" + id + "> not found"));
+        if (rightsResolver.resolveArticleAction(id, authentication)) {
+            String newTitle = Jsoup.clean(article.getTitle(), Safelist.basic());
+            String newContent = Jsoup.clean(article.getContent(), Safelist.basic());
+            articlesRepository.updateById(id, newTitle, newContent);
+        } else {
+            throw new AccessDeniedException("You don't have rights to do that");
+        }
     }
 
     @Transactional
@@ -80,11 +90,12 @@ public class ArticlesServiceImpl implements ArticlesService {
     }
 
     @Transactional
-    public void deleteArticleById(Integer id) {
-        if (articlesRepository.findById(id).isPresent()) {
+    public void deleteArticleById(Integer id, Authentication authentication) {
+        articlesRepository.findById(id).orElseThrow(() -> new NotFoundException("Article with id <" + id + "> not found"));
+        if (rightsResolver.resolveArticleAction(id,authentication)) {
             articlesRepository.deleteById(id);
         } else {
-            throw new NotFoundException("Article with id <" + id + "> does not exist");
+            throw new AccessDeniedException("You don't have rights to do that");
         }
     }
 }

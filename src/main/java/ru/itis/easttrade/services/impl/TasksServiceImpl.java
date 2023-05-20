@@ -3,6 +3,7 @@ package ru.itis.easttrade.services.impl;
 import lombok.RequiredArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Safelist;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,6 +17,8 @@ import ru.itis.easttrade.models.Topic;
 import ru.itis.easttrade.repositories.AccountsRepository;
 import ru.itis.easttrade.repositories.TasksRepository;
 import ru.itis.easttrade.services.TasksService;
+import ru.itis.easttrade.utils.RightsResolver;
+import ru.itis.easttrade.utils.RoleChecker;
 
 import javax.transaction.Transactional;
 import java.security.Principal;
@@ -29,6 +32,8 @@ import java.util.stream.Collectors;
 public class TasksServiceImpl implements TasksService {
     private final TasksRepository tasksRepository;
     private final AccountsRepository accountsRepository;
+    private final RoleChecker roleChecker;
+    private final RightsResolver rightsResolver;
 
     @Override
     @Transactional
@@ -50,19 +55,27 @@ public class TasksServiceImpl implements TasksService {
 
     @Override
     @Transactional
-    public void updateTask(Integer id, @ModelAttribute UpdateTaskDto taskDto) {
+    public void updateTask(Integer id, @ModelAttribute UpdateTaskDto taskDto, Authentication authentication) {
         tasksRepository.findById(id).orElseThrow(() -> new NotFoundException("Task with id <" + id + "> not found"));
-        String newName = Jsoup.clean(taskDto.getName(), Safelist.basic());
-        String newDescription = Jsoup.clean(taskDto.getDescription(), Safelist.basic());
-        Task.TaskState newState = taskDto.getState();
-        tasksRepository.updateById(id, newName, newDescription, newState);
+        if (rightsResolver.resolveTaskAction(id, authentication)) {
+            String newName = Jsoup.clean(taskDto.getName(), Safelist.basic());
+            String newDescription = Jsoup.clean(taskDto.getDescription(), Safelist.basic());
+            Task.TaskState newState = taskDto.getState();
+            tasksRepository.updateById(id, newName, newDescription, newState);
+        } else {
+            throw new AccessDeniedException("You don't have rights to do that");
+        }
     }
 
     @Override
     @Transactional
-    public void deleteTaskById(Integer id) {
+    public void deleteTaskById(Integer id, Authentication authentication) {
         tasksRepository.findById(id).orElseThrow(() -> new NotFoundException("Task with id <" + id + "> not found"));
-        tasksRepository.deleteById(id);
+        if (rightsResolver.resolveTaskAction(id, authentication)) {
+            tasksRepository.deleteById(id);
+        } else {
+            throw new AccessDeniedException("You don't have rights to do that");
+        }
     }
 
     @Override

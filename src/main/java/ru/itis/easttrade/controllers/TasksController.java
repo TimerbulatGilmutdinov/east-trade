@@ -1,6 +1,7 @@
 package ru.itis.easttrade.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,7 +32,7 @@ public class TasksController {
     @GetMapping("/tasks/{id}")
     public String getTaskById(@PathVariable("id") Integer id, Model model, Authentication authentication) {
         TaskDto task = tasksService.getTaskById(id);
-        model.addAttribute("authentication",authentication);
+        model.addAttribute("authentication", authentication);
         model.addAttribute("hasEnoughAuthority", roleChecker.hasEnoughAuthority(authentication));
         model.addAttribute("task", task);
         return "task";
@@ -58,20 +59,26 @@ public class TasksController {
     }
 
     @DeleteMapping("/tasks/{id}")
-    public void deleteTask(@PathVariable("id") Integer id) {
-        tasksService.deleteTaskById(id);
+    public void deleteTask(@PathVariable("id") Integer id, Authentication authentication) {
+        boolean isAuthor = tasksService.getTaskById(id).getAccountEmail().equals(authentication.getName());
+        tasksService.deleteTaskById(id,authentication);
     }
 
     @GetMapping("/tasks/{id}/update")
-    public String getUpdateTask(@PathVariable("id") Integer id, Model model) {
-        TaskDto task = tasksService.getTaskById(id);
-        model.addAttribute("task", task);
-        return "update-task";
+    public String getUpdateTask(@PathVariable("id") Integer id, Model model, Authentication authentication) {
+        boolean isAuthor = tasksService.getTaskById(id).getAccountEmail().equals(authentication.getName());
+        if (isAuthor || roleChecker.hasEnoughAuthority(authentication)) {
+            TaskDto task = tasksService.getTaskById(id);
+            model.addAttribute("task", task);
+            return "update-task";
+        } else {
+            throw new AccessDeniedException("You don't have rights to do that");
+        }
     }
 
     @PostMapping("/tasks/{id}/update")
-    public String updateTask(@PathVariable("id") Integer id, @ModelAttribute UpdateTaskDto taskDto) {
-        tasksService.updateTask(id, taskDto);
+    public String updateTask(@PathVariable("id") Integer id, @ModelAttribute UpdateTaskDto taskDto, Authentication authentication) {
+        tasksService.updateTask(id, taskDto, authentication);
         return "redirect:" + MvcUriComponentsBuilder.fromMappingName("TC#getTaskById").arg(0, id).build();
     }
 

@@ -21,11 +21,11 @@ public interface ArticlesService {
 
     List<ArticleDto> getAllArticlesOrderByDateDesc();
 
-    void updateArticleById(@RequestParam("id") Integer id, UpdateArticleDto article);
+    void updateArticleById(@RequestParam("id") Integer id, UpdateArticleDto article, Authentication authentication);
 
     ArticleDto saveArticle(ArticleDto articleDto, Authentication authentication);
 
-    void deleteArticleById(Integer id);
+    void deleteArticleById(Integer id, Authentication authentication);
 
     List<ArticleDto> getArticlesByAccount(AccountDto accountDto);
 }

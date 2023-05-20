@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import ru.itis.easttrade.dto.ArticleDto;
 import ru.itis.easttrade.dto.ExceptionDto;
@@ -55,7 +56,7 @@ public interface ArticlesApi {
             )
     })
     @GetMapping("/api/create-article")
-    ResponseEntity<ArticleDto> createArticle(@RequestBody ArticleDto articleDto, Principal principal);
+    ResponseEntity<ArticleDto> createArticle(@RequestBody ArticleDto articleDto, Authentication authentication);
 
 
     @Operation(summary = "Updating article")
@@ -76,7 +77,7 @@ public interface ArticlesApi {
     @PostMapping("/api/articles/{id}/update")
     ResponseEntity<ArticleDto> updateArticleById(
             @Parameter(description = "Article's id", example = "123") @PathVariable("id") Integer id,
-            @RequestBody UpdateArticleDto updatedArticle);
+            @RequestBody UpdateArticleDto updatedArticle, Authentication authentication);
 
     @Operation(summary = "Removing article")
     @ApiResponses(value = {
@@ -90,5 +91,5 @@ public interface ArticlesApi {
     })
     @PostMapping("/api/articles/{id}/delete")
     ResponseEntity<?> deleteArticleById(
-            @Parameter(description = "Article's id", example = "123") @PathVariable("id") Integer id);
+            @Parameter(description = "Article's id", example = "123") @PathVariable("id") Integer id, Authentication authentication);
 }

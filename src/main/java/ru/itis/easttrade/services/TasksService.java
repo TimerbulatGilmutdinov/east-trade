@@ -11,8 +11,8 @@ import java.util.List;
 
 public interface TasksService {
     TaskDto saveTask(UpdateTaskDto taskDto, Authentication authentication);
-    void updateTask(Integer id, UpdateTaskDto updateTask);
-    void deleteTaskById(Integer id);
+    void updateTask(Integer id, UpdateTaskDto updateTask, Authentication authentication);
+    void deleteTaskById(Integer id, Authentication authentication);
     TaskDto getTaskById(Integer id);
     List<TaskDto> getAllArticles();
     List<TaskDto> getAllTasksOrderByDateAsc();

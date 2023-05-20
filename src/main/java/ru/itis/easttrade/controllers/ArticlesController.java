@@ -71,13 +71,13 @@ public class ArticlesController {
     }
 
     @PostMapping("/articles/{id}/update")
-    public String updateArticle(@PathVariable("id") Integer id, @ModelAttribute("article") UpdateArticleDto articleDto, Model model) {
-        articlesService.updateArticleById(id, articleDto);
+    public String updateArticle(@PathVariable("id") Integer id, @ModelAttribute("article") UpdateArticleDto articleDto, Authentication authentication) {
+        articlesService.updateArticleById(id, articleDto, authentication);
         return "redirect:"+MvcUriComponentsBuilder.fromMappingName("AC#getArticleById").arg(0,id).build();
     }
 
     @DeleteMapping("/articles/{id}")
-    public void deleteArticle(@PathVariable("id") Integer id){
-        articlesService.deleteArticleById(id);
+    public void deleteArticle(@PathVariable("id") Integer id, Authentication authentication){
+        articlesService.deleteArticleById(id, authentication);
     }
 }
