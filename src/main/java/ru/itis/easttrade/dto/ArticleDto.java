@@ -21,8 +21,7 @@ public class ArticleDto {
     private String title;
     private String content;
     private Date publishDate;
-
-    private Account account;
+    private String accountInfo;
 
     public static ArticleDto from(Article article) {
         return ArticleDto.builder()
@@ -30,7 +29,7 @@ public class ArticleDto {
                 .title(article.getTitle())
                 .content(article.getContent())
                 .publishDate(article.getPublishDate())
-                .account(article.getAccount())
+                .accountInfo(article.getAccount().toString())
                 .build();
     }
 
