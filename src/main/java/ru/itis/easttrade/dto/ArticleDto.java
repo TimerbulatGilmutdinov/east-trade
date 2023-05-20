@@ -21,6 +21,7 @@ public class ArticleDto {
     private String title;
     private String content;
     private Date publishDate;
+    private String accountEmail;
     private String accountInfo;
 
     public static ArticleDto from(Article article) {
@@ -29,6 +30,7 @@ public class ArticleDto {
                 .title(article.getTitle())
                 .content(article.getContent())
                 .publishDate(article.getPublishDate())
+                .accountEmail(article.getAccount().getEmail())
                 .accountInfo(article.getAccount().toString())
                 .build();
     }

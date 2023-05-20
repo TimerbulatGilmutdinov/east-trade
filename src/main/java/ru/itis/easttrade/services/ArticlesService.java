@@ -1,5 +1,6 @@
 package ru.itis.easttrade.services;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.itis.easttrade.dto.AccountDto;
 import ru.itis.easttrade.dto.ArticleDto;
@@ -22,7 +23,7 @@ public interface ArticlesService {
 
     void updateArticleById(@RequestParam("id") Integer id, UpdateArticleDto article);
 
-    ArticleDto saveArticle(ArticleDto articleDto, Principal principal);
+    ArticleDto saveArticle(ArticleDto articleDto, Authentication authentication);
 
     void deleteArticleById(Integer id);
 

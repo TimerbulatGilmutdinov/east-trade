@@ -3,6 +3,7 @@ package ru.itis.easttrade.services.impl;
 import lombok.RequiredArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Safelist;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import ru.itis.easttrade.dto.AccountDto;
@@ -65,8 +66,8 @@ public class ArticlesServiceImpl implements ArticlesService {
     }
 
     @Transactional
-    public ArticleDto saveArticle(ArticleDto articleDto, Principal principal) {
-        String email = principal.getName();
+    public ArticleDto saveArticle(ArticleDto articleDto, Authentication authentication) {
+        String email = authentication.getName();
         Account account = accountsRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("Account with email <" + email + "> not found"));
 
         Article article = Article.builder()

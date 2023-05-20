@@ -1,6 +1,7 @@
 package ru.itis.easttrade.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -24,25 +25,27 @@ public class ArticlesController {
     private final ArticlesService articlesService;
 
     @GetMapping("/articles")
-    public String getAllArticles(@RequestParam(name = "sort",defaultValue = "new") String sort, Model model) {
+    public String getAllArticles(@RequestParam(name = "sort",defaultValue = "new") String sort, Model model, Authentication authentication) {
         List<ArticleDto> articles = articlesService.getAllArticlesOrderByDateDesc();
         if (sort.equals("old")) {
             articles.sort(Comparator.comparing(ArticleDto::getPublishDate));
         }
+        model.addAttribute("authentication",authentication);
         model.addAttribute("sorted",sort);
         model.addAttribute("articles", articles);
         return "articles";
     }
 
     @GetMapping("/my-articles")
-    public String myArticles(Model model, Principal principal) {
-        AccountDto accountDto = accountsService.getAccountByEmail(principal.getName());
+    public String myArticles(Model model, Authentication authentication) {
+        AccountDto accountDto = accountsService.getAccountByEmail(authentication.getName());
         List<ArticleDto> articles = articlesService.getArticlesByAccount(accountDto);
         model.addAttribute("articles", articles);
         return "my-articles";
     }
     @GetMapping("/articles/{id}")
-    public String getArticleById(@PathVariable("id") Integer id, Model model) {
+    public String getArticleById(@PathVariable("id") Integer id, Model model, Authentication authentication) {
+        model.addAttribute("authentication",authentication);
         model.addAttribute("article", articlesService.getArticleById(id));
         return "article";
     }
@@ -54,13 +57,13 @@ public class ArticlesController {
     }
 
     @PostMapping("/create-article")
-    public String createArticle(@ModelAttribute("article") ArticleDto articleDto, Principal principal) {
-        int id = articlesService.saveArticle(articleDto,principal).getId();
+    public String createArticle(@ModelAttribute("article") ArticleDto articleDto, Authentication authentication) {
+        int id = articlesService.saveArticle(articleDto,authentication).getId();
         return "redirect:" + MvcUriComponentsBuilder.fromMappingName("AC#getArticleById").arg(0, id).build();
     }
 
     @GetMapping("/articles/{id}/update")
-    public String getUpdateArticle(@PathVariable("id") Integer id, Model model) {
+    public String getUpdateArticle(@PathVariable("id") Integer id, Model model, Authentication authentication) {
         model.addAttribute("article", articlesService.getArticleById(id));
         return "update-article";
     }

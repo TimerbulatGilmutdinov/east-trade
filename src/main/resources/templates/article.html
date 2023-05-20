@@ -11,7 +11,7 @@
     <h1>Article</h1>
     <div class="field">
         <label>Author:</label>
-        <p th:text="${article.account}"></p>
+        <p th:text="${article.accountInfo}"></p>
     </div>
     <div class="field">
         <label>Publish date:</label>
@@ -25,9 +25,14 @@
         <label>Content:</label>
         <p th:utext="${article.content}"></p>
     </div>
-
-    <a th:href="@{/articles/{id}/update(id=${article.id})}"><button type="submit">Edit</button></a>
-    <a href="/profile"><button type="submit">Go to profile</button></a>
+    <div th:if="${authentication!=null&&article.accountEmail==authentication.name}">
+        <a th:href="@{/articles/{id}/update(id=${article.id})}">
+            <button type="submit">Edit</button>
+        </a>
+    </div>
+    <a href="/profile">
+        <button type="submit">Go to profile</button>
+    </a>
 </div>
 </body>
 </html>
