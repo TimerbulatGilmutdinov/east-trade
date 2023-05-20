@@ -1,5 +1,6 @@
 package ru.itis.easttrade.services;
 
+import org.springframework.security.core.Authentication;
 import ru.itis.easttrade.dto.AccountDto;
 import ru.itis.easttrade.dto.UpdateTaskDto;
 import ru.itis.easttrade.dto.TaskDto;
@@ -9,7 +10,7 @@ import java.security.Principal;
 import java.util.List;
 
 public interface TasksService {
-    TaskDto saveTask(UpdateTaskDto taskDto, Principal principal);
+    TaskDto saveTask(UpdateTaskDto taskDto, Authentication authentication);
     void updateTask(Integer id, UpdateTaskDto updateTask);
     void deleteTaskById(Integer id);
     TaskDto getTaskById(Integer id);

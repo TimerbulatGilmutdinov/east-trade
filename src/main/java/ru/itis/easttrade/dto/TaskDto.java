@@ -22,8 +22,10 @@ import java.util.stream.Collectors;
 public class TaskDto {
     @Schema(description = "Id", example = "1642")
     private Integer id;
-    @Schema(description = "Task owner", implementation = Account.class)
+    @Schema(description = "Task owner")
     private String accountInfo;
+    @Schema(description = "Owner email")
+    private String accountEmail;
     @Schema(description = "Publish date", example = "")
     private Date publishDate;
     @Schema(description = "Topic", example = "Housework", implementation = Topic.class)
@@ -40,6 +42,7 @@ public class TaskDto {
         return TaskDto.builder()
                 .id(task.getId())
                 .accountInfo(task.getAccount().toString())
+                .accountEmail(task.getAccount().getEmail())
                 .publishDate(task.getPublishDate())
                 .topic(task.getTopic())
                 .name(task.getName())

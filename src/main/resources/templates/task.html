@@ -11,7 +11,7 @@
     <h1>Услуга</h1>
     <div class="field">
         <label>Автор:</label>
-        <p th:text="${task.account}"></p>
+        <p th:text="${task.accountInfo }"></p>
     </div>
     <div class="field">
         <label>Дата публикации:</label>
@@ -37,10 +37,12 @@
         <label>Состояние:</label>
         <p th:text="${task.state}"></p>
     </div>
+    <div th:if="${authentication!=null&&task.accountEmail==authentication.name}">
+        <a th:href="@{'/tasks/'+${task.id}+'/update'}">
+            <button type="submit">Edit</button>
+        </a>
+    </div>
 
-    <a th:href="@{'/tasks/'+${task.id}+'/update'}">
-        <button type="submit">Edit</button>
-    </a>
     <a th:href="@{/profile}">
         <button type="submit">Go to profile</button>
     </a>

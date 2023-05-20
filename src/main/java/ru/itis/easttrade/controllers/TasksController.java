@@ -1,6 +1,7 @@
 package ru.itis.easttrade.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +27,9 @@ public class TasksController {
     private final TasksRepository tasksRepository;
 
     @GetMapping("/tasks/{id}")
-    public String getTaskById(@PathVariable("id") Integer id, Model model) {
+    public String getTaskById(@PathVariable("id") Integer id, Model model, Authentication authentication) {
         TaskDto task = tasksService.getTaskById(id);
+        model.addAttribute("authentication",authentication);
         model.addAttribute("task", task);
         return "task";
     }
@@ -39,14 +41,14 @@ public class TasksController {
     }
 
     @PostMapping("/create-task")
-    public String createTask(@ModelAttribute("task") UpdateTaskDto taskDto, Principal principal) {
-        int id = tasksService.saveTask(taskDto, principal).getId();
+    public String createTask(@ModelAttribute("task") UpdateTaskDto taskDto, Authentication authentication) {
+        int id = tasksService.saveTask(taskDto, authentication).getId();
         return "redirect:" + MvcUriComponentsBuilder.fromMappingName("TC#getTaskById").arg(0, id).build();
     }
 
     @GetMapping("/my-tasks")
-    public String myTasks(Model model, Principal principal) {
-        AccountDto accountDto = accountsService.getAccountByEmail(principal.getName());
+    public String myTasks(Model model, Authentication authentication) {
+        AccountDto accountDto = accountsService.getAccountByEmail(authentication.getName());
         List<TaskDto> tasks = tasksService.getTasksByAccount(accountDto);
         model.addAttribute("tasks", tasks);
         return "my-tasks";
