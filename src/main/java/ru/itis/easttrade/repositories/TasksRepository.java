@@ -22,8 +22,8 @@ public interface TasksRepository extends JpaRepository<Task, Integer> {
     List<Task> findAllByOrderByPublishDateAsc();
     @Query(value = "select * from tasks a where a.topic=(select topic from tasks group by topic order by count(*) desc limit 1)", nativeQuery = true)
     List<Task> findAllByMostPopularTopic();
-    @Query("from Task a where a.id = (select max(price) from Task)")
-    Task findMostExpensive();
+    @Query(value = "select * from tasks where date(publish_date) = current_date", nativeQuery = true)
+    List<Task> findAllForToday();
     @Modifying
     @Query("UPDATE Task a SET a.name = :newName, a.description= :newDescription, a.state = :newState WHERE a.id = :id")
     void updateById(@Param("id") Integer id, @Param("newName") String newName, @Param("newDescription") String newDescription, @Param("newState") Task.TaskState state);

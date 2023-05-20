@@ -28,4 +28,5 @@ public interface ArticlesService {
     void deleteArticleById(Integer id, Authentication authentication);
 
     List<ArticleDto> getArticlesByAccount(AccountDto accountDto);
+    List<ArticleDto> getAllArticlesForToday();
 }

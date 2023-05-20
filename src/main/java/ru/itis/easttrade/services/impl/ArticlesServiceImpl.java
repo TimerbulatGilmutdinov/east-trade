@@ -98,4 +98,9 @@ public class ArticlesServiceImpl implements ArticlesService {
             throw new AccessDeniedException("You don't have rights to do that");
         }
     }
+
+    @Override
+    public List<ArticleDto> getAllArticlesForToday(){
+        return ArticleDto.from(articlesRepository.findAllForToday());
+    }
 }

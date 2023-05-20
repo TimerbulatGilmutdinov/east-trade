@@ -17,6 +17,8 @@ public interface ArticlesRepository extends JpaRepository<Article, Integer> {
     List<Article> findAllByAccount(Account account);
     List<Article> findAllByOrderByPublishDateDesc();
     List<Article> findAllByOrderByPublishDateAsc();
+    @Query(value = "SELECT * FROM articles WHERE date(publish_date) = CURRENT_DATE",nativeQuery = true)
+    List<Article> findAllForToday();
     @Modifying
     @Query("UPDATE Article a SET a.title = :newTitle, a.content= :newContent WHERE a.id = :id")
     void updateById(@Param("id") Integer id, @Param("newTitle") String newTitle, @Param("newContent") String content);

@@ -117,6 +117,11 @@ public class TasksServiceImpl implements TasksService {
     }
 
     @Override
+    public List<TaskDto> getAllTasksForToday(){
+        return TaskDto.from(tasksRepository.findAllForToday());
+    }
+
+    @Override
     public List<TaskDto> getSortedTasksByTopic(List<TaskDto> tasks, Topic topic) {
         List<TaskDto> list = tasks.stream().filter(e -> e.getTopic().equals(topic)).collect(Collectors.toList());
         return list;

@@ -21,4 +21,5 @@ public interface TasksService {
     List<TaskDto> getTasksByAccount(AccountDto accountDto);
     List<TaskDto> getAllTasks();
     List<TaskDto> getSortedTasksByTopic(List<TaskDto> list, Topic topic);
+    List<TaskDto> getAllTasksForToday();
 }

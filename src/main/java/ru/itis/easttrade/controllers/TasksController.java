@@ -38,6 +38,12 @@ public class TasksController {
         return "task";
     }
 
+    @GetMapping("/tasks/today")
+    public String getArticlesForToday(Model model){
+        model.addAttribute("tasks",tasksService.getAllTasksForToday());
+        return "tasks";
+    }
+
     @GetMapping("/create-task")
     public String getCreateTask(Model model) {
         model.addAttribute("task", new UpdateTaskDto());

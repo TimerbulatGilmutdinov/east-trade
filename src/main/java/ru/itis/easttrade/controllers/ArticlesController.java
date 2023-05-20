@@ -52,6 +52,12 @@ public class ArticlesController {
         return "article";
     }
 
+    @GetMapping("/articles/today")
+    public String getArticlesForToday(Model model){
+        model.addAttribute("articles",articlesService.getAllArticlesForToday());
+        return "articles";
+    }
+
     @GetMapping("/create-article")
     public String getCreateArticle(Model model) {
         model.addAttribute("article", new UpdateArticleDto());
