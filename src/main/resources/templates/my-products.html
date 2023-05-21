@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta th:name="_csrf" th:content="${_csrf.token}"/>
+    <meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>My products</title>
+    <link rel="stylesheet" href="/static/css/my-tasks.css">
+</head>
+<body>
+<div class="container">
+    <div class="sorting">
+        <label>Sort by:</label>
+        <select id="sortSelect" onchange="sortProducts()">
+            <option value="new" th:selected="${sorted == 'new'}">Newest First</option>
+            <option value="old" th:selected="${sorted == 'old'}">Oldest First</option>
+        </select>
+    </div>
+</div>
+<div class="container" th:each="product :${products}">
+    <h1 th:object="${product}" th:field="*{name}" th:inline="text">[[${product.name}]]</h1>
+
+    <div class="field">
+        <label>Publish date:</label>
+        <p th:text="${product.publishDate}"></p>
+    </div>
+    <div class="field">
+        <label>Description:</label>
+        <p th:text="${product.description}"></p>
+    </div>
+    <div class="field">
+        <label>Price:</label>
+        <p th:text="${product.price}">Р</p>
+    </div>
+    <a th:href="@{/products/{id}/update (id=${product.id})}" class="button">Edit</a>
+    <a class="button" th:attr="onclick='deleteProduct(' + ${product.id} + ')'">Delete</a>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="/static/js/my-products.js">
+</script>
+
+</body>
+</html>

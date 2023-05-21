@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import ru.itis.easttrade.repositories.ArticlesRepository;
+import ru.itis.easttrade.repositories.ProductsRepository;
 import ru.itis.easttrade.repositories.TasksRepository;
 
 @Component
@@ -12,6 +13,7 @@ public class RightsResolver {
     private final RoleChecker roleChecker;
     private final TasksRepository tasksRepository;
     private final ArticlesRepository articlesRepository;
+    private final ProductsRepository productsRepository;
     public boolean resolveTaskAction(Integer taskId, Authentication authentication){
         if(authentication ==null){
             return false;
@@ -25,6 +27,14 @@ public class RightsResolver {
             return false;
         }
         boolean isAuthor = articlesRepository.findById(articleId).get().getAccount().getEmail().equals(authentication.getName());
+        return isAuthor||roleChecker.hasEnoughAuthority(authentication);
+    }
+
+    public boolean resolveProductAction(Integer id, Authentication authentication){
+        if(authentication == null){
+            return false;
+        }
+        boolean isAuthor = productsRepository.findById(id).get().getAccount().getEmail().equals(authentication.getName());
         return isAuthor||roleChecker.hasEnoughAuthority(authentication);
     }
 }

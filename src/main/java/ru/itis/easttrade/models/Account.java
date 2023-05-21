@@ -25,10 +25,12 @@ public class Account {
     private String phoneNumber;
     @Column(nullable = false)
     private String passwordHash;
-    @OneToMany
+    @OneToMany(mappedBy = "account")
     private List<Task> tasks;
-    @OneToMany
+    @OneToMany(mappedBy = "account")
     private List<Article> articles;
+    @OneToMany(mappedBy = "account")
+    private List<Product> products;
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;

@@ -107,6 +107,25 @@
                     </div>
                 </div>
             </div>
+            <div class="panel panel-default target">
+                <div class="panel-heading" contenteditable="false">Products</div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-4" th:each="product : ${products}">
+                            <div class="thumbnail" th:object="${product}">
+                                <!--                                <img alt="300x200"-->
+                                <!--                                     src="https://click2delivery.ru/wp-content/uploads/2021/04/svg-editor-image-1-e1617788478264.png">-->
+                                <div class="caption">
+                                    <a th:href="@{/products/{id}(id=${product.id})}"><h3 th:field="*{name}" th:text="*{name}">
+                                    </h3></a>
+                                    <p th:field="*{description}" th:text="*{description}">
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

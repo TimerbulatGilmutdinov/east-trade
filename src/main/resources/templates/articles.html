@@ -10,7 +10,7 @@
 <div class="container">
     <div class="sorting">
         <label>Sort by:</label>
-        <select id="sortSelect" onchange="sortTasks()">
+        <select id="sortSelect" onchange="sortArticles()">
             <option value="new" th:selected="${sorted == 'new'}">Newest First</option>
             <option value="old" th:selected="${sorted == 'old'}">Oldest First</option>
         </select>
@@ -29,7 +29,7 @@
         <a th:href="@{/articles/{id}(id=${article.id})}"><p th:text="${article.title}"></p></a>
     </div>
 </div>
-<script src="/static/js/my-articles.js">
+<script src="/static/js/articles.js">
 </script>
 </body>
 </html>

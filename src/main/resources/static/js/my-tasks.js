@@ -22,8 +22,8 @@ function sortTasks() {
     let topicSelectedValue = topicSelect.value;
 
     if (topicSelectedValue === "ALL") {
-        window.location.href = "/tasks?sort=" + timeSelectedValue;
+        window.location.href = "/my-tasks?sort=" + timeSelectedValue;
     } else {
-        window.location.href = "tasks?sort="+timeSelectedValue+"&topic="+topicSelectedValue;
+        window.location.href = "/my-tasks?sort="+timeSelectedValue+"&topic="+topicSelectedValue;
     }
 }

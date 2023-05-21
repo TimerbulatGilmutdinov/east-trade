@@ -3,6 +3,7 @@ package ru.itis.easttrade.controllers;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import ru.itis.easttrade.repositories.AccountsRepository;
 import ru.itis.easttrade.repositories.TasksRepository;
 import ru.itis.easttrade.services.AccountsService;
 import ru.itis.easttrade.services.ArticlesService;
+import ru.itis.easttrade.services.ProductsService;
 import ru.itis.easttrade.services.TasksService;
 
 import java.security.Principal;
@@ -27,14 +29,16 @@ public class ProfileController {
     private final TasksService tasksService;
     private final AccountsService accountsService;
     private final ArticlesService articlesService;
+    private final ProductsService productsService;
 
     @GetMapping("/profile")
-    public String profilePage(Model model, Principal principal) {
-        AccountDto accountDto = accountsService.getAccountByEmail(principal.getName());
+    public String profilePage(Model model, Authentication authentication) {
+        AccountDto accountDto = accountsService.getAccountByEmail(authentication.getName());
         List<TaskDto> tasks = tasksService.getTasksByAccount(accountDto);
         model.addAttribute("account", accountDto);
         model.addAttribute("tasks", tasks);
         model.addAttribute("articles", articlesService.getArticlesByAccount(accountDto));
+        model.addAttribute("products", productsService.getProductsByAccount(accountDto));
         return "profile";
     }
 }
