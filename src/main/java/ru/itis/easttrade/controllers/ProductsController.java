@@ -1,14 +1,14 @@
 package ru.itis.easttrade.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
-import ru.itis.easttrade.dto.*;
-import ru.itis.easttrade.models.Topic;
+import ru.itis.easttrade.dto.AccountDto;
+import ru.itis.easttrade.dto.ProductDto;
+import ru.itis.easttrade.dto.UpdateProductDto;
 import ru.itis.easttrade.services.AccountsService;
 import ru.itis.easttrade.services.ProductsService;
 import ru.itis.easttrade.utils.CurrencyHelper;

@@ -12,11 +12,11 @@ import ru.itis.easttrade.repositories.AccountsRepository;
 public class WelcomeController {
     private final AccountsRepository accountsRepository;
     @GetMapping("/welcome")
-    public String getWelcomePage(Model model){
+    public String getWelcomePage(){
         return "welcome";
     }
     @GetMapping("/")
-    public String redirectToWelcomePage(Model model){
+    public String redirectToWelcomePage(){
         return "redirect:"+ MvcUriComponentsBuilder.fromMappingName("WC#getWelcomePage").build();
     }
 }

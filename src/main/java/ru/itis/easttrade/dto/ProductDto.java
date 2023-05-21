@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.itis.easttrade.models.Article;
 import ru.itis.easttrade.models.Product;
 
 import java.util.Date;

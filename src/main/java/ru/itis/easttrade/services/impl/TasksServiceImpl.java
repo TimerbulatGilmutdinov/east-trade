@@ -18,10 +18,8 @@ import ru.itis.easttrade.repositories.AccountsRepository;
 import ru.itis.easttrade.repositories.TasksRepository;
 import ru.itis.easttrade.services.TasksService;
 import ru.itis.easttrade.utils.RightsResolver;
-import ru.itis.easttrade.utils.RoleChecker;
 
 import javax.transaction.Transactional;
-import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;

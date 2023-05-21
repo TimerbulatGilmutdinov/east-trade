@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.itis.easttrade.models.Account;
-import ru.itis.easttrade.models.Article;
 import ru.itis.easttrade.models.Task;
 import ru.itis.easttrade.models.Topic;
 

@@ -2,7 +2,6 @@ package ru.itis.easttrade.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 import ru.itis.easttrade.models.Account;
 import ru.itis.easttrade.models.Role;
 import ru.itis.easttrade.models.State;

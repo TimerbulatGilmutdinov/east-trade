@@ -19,7 +19,6 @@ import ru.itis.easttrade.services.ArticlesService;
 import ru.itis.easttrade.utils.RightsResolver;
 
 import javax.transaction.Transactional;
-import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 

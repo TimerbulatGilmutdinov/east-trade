@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import ru.itis.easttrade.dto.*;
 import ru.itis.easttrade.exceptions.NotFoundException;
 import ru.itis.easttrade.models.Account;
-import ru.itis.easttrade.models.Article;
 import ru.itis.easttrade.models.Product;
 import ru.itis.easttrade.repositories.AccountsRepository;
 import ru.itis.easttrade.repositories.ProductsRepository;

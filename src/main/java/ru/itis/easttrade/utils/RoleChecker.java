@@ -4,8 +4,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import ru.itis.easttrade.models.Role;
 
-import java.util.List;
-
 @Component
 public class RoleChecker {
     public boolean isAdmin(Authentication authentication){

@@ -11,11 +11,8 @@ import ru.itis.easttrade.dto.ArticleDto;
 import ru.itis.easttrade.dto.UpdateArticleDto;
 import ru.itis.easttrade.services.AccountsService;
 import ru.itis.easttrade.services.ArticlesService;
-import ru.itis.easttrade.services.TasksService;
 import ru.itis.easttrade.utils.RightsResolver;
-import ru.itis.easttrade.utils.RoleChecker;
 
-import java.security.Principal;
 import java.util.Comparator;
 import java.util.List;
 

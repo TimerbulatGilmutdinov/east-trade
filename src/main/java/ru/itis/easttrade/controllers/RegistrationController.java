@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.itis.easttrade.dto.NewOrUpdateAccountDto;
-import ru.itis.easttrade.exceptions.ModelAttributeValidationException;
 import ru.itis.easttrade.services.AccountsService;
 
 import javax.validation.Valid;

@@ -6,7 +6,6 @@ import ru.itis.easttrade.dto.AccountDto;
 import ru.itis.easttrade.dto.ArticleDto;
 import ru.itis.easttrade.dto.UpdateArticleDto;
 
-import java.security.Principal;
 import java.util.List;
 
 public interface ArticlesService {
