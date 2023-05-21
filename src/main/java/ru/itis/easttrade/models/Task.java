@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.Set;
 
 @Builder
 @Data
@@ -38,4 +39,11 @@ public class Task {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TaskState state;
+    @ManyToMany
+    @JoinTable(
+            name = "task_task_respond",
+            joinColumns = @JoinColumn(name = "task_id"),
+            inverseJoinColumns = @JoinColumn(name = "task_respond_id")
+    )
+    private Set<TaskRespond> taskResponds;
 }

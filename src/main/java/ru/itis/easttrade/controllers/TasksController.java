@@ -14,6 +14,7 @@ import ru.itis.easttrade.dto.TaskDto;
 import ru.itis.easttrade.dto.UpdateTaskDto;
 import ru.itis.easttrade.models.Topic;
 import ru.itis.easttrade.services.AccountsService;
+import ru.itis.easttrade.services.TaskRespondsService;
 import ru.itis.easttrade.services.TasksService;
 import ru.itis.easttrade.utils.CurrencyHelper;
 import ru.itis.easttrade.utils.RightsResolver;
@@ -28,6 +29,7 @@ import java.util.List;
 public class TasksController {
     private final TasksService tasksService;
     private final AccountsService accountsService;
+    private final TaskRespondsService taskRespondsService;
     private final RoleChecker roleChecker;
     private final RightsResolver rightsResolver;
     private final CurrencyHelper currencyHelper;
@@ -36,12 +38,21 @@ public class TasksController {
     @GetMapping("/tasks/{id}")
     public String getTaskById(@PathVariable("id") Integer id, Model model, Authentication authentication) {
         TaskDto task = tasksService.getTaskById(id);
+        model.addAttribute("authentication",authentication);
+        model.addAttribute("responds", taskRespondsService.getAllRespondsByTasksId(id));
         model.addAttribute("hasEnoughAuthority", rightsResolver.resolveTaskAction(id, authentication));
         model.addAttribute("task", task);
         DecimalFormat decimalFormat = new DecimalFormat("#.##");
         String secondResult = decimalFormat.format(task.getPrice() / currencyHelper.getCurrency("USD"));
         model.addAttribute("USD", secondResult);
         return "task";
+    }
+
+    @PostMapping("/tasks/{id}")
+    public String addRespond(@PathVariable("id") Integer taskId, Authentication authentication){
+        Integer accountId = accountsService.getAccountByEmail(authentication.getName()).getId();
+        taskRespondsService.addTaskRespond(taskId, accountId);
+        return "redirect:"+MvcUriComponentsBuilder.fromMappingName("TC#getTaskById").arg(0,taskId).build();
     }
 
     @GetMapping("/tasks/today")

@@ -11,6 +11,7 @@ import ru.itis.easttrade.models.Account;
 import ru.itis.easttrade.repositories.AccountsRepository;
 import ru.itis.easttrade.services.AccountsService;
 import ru.itis.easttrade.services.ArticlesService;
+import ru.itis.easttrade.services.ProductsService;
 import ru.itis.easttrade.services.TasksService;
 
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.List;
 public class AccountsController {
     private final AccountsService accountsService;
     private final ArticlesService articlesService;
+    private final ProductsService productsService;
     private final TasksService tasksService;
     private final AccountsRepository accountsRepository;
 
@@ -29,6 +31,7 @@ public class AccountsController {
         model.addAttribute("account", accountDto);
         model.addAttribute("tasks", tasksService.getTasksByAccount(accountDto));
         model.addAttribute("articles", articlesService.getArticlesByAccount(accountDto));
+        model.addAttribute("products", productsService.getProductsByAccount(accountDto));
         return "profile";
     }
 
