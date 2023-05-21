@@ -1,12 +1,14 @@
 package ru.itis.easttrade.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
+import ru.itis.easttrade.converters.StringToTopicConverter;
 import ru.itis.easttrade.dto.AccountDto;
 import ru.itis.easttrade.dto.UpdateTaskDto;
 import ru.itis.easttrade.dto.TaskDto;
@@ -64,7 +66,7 @@ public class TasksController {
     }
 
     @GetMapping("/my-tasks")
-    public String myTasks(@RequestParam(name = "sort", defaultValue = "new") String sort, @RequestParam(name = "topic", required = false) Topic topic, Model model, Authentication authentication) {
+    public String myTasks(@RequestParam(name = "sort", defaultValue = "new") String sort, @RequestParam(name = "topic", required = false) String topic, Model model, Authentication authentication) {
         AccountDto accountDto = accountsService.getAccountByEmail(authentication.getName());
         List<TaskDto> tasks = tasksService.getTasksByAccount(accountDto);
 
@@ -79,12 +81,14 @@ public class TasksController {
         return "my-tasks";
     }
 
-    private List<TaskDto> sortByTopic(@RequestParam(name = "sort", defaultValue = "new") String sort, @RequestParam(name = "topic", required = false) Topic topic, Model model, List<TaskDto> tasks) {
-        if (topic == null || topic.name().equals("ALL")) {
+    private List<TaskDto> sortByTopic(@RequestParam(name = "sort", defaultValue = "new") String sort, @RequestParam(name = "topic", required = false) String topic, Model model, List<TaskDto> tasks) {
+        StringToTopicConverter converter = new StringToTopicConverter();
+        if (topic == null || topic.equals("ALL")) {
             model.addAttribute("topic", "ALL");
         } else {
-            tasks = tasksService.getSortedTasksByTopic(tasks, topic);
-            model.addAttribute("topic", topic.name());
+            Topic topic1 = (Topic) converter.convert(topic, TypeDescriptor.valueOf(String.class), TypeDescriptor.valueOf(Topic.class));
+            tasks = tasksService.getSortedTasksByTopic(tasks, topic1);
+            model.addAttribute("topic", topic);
         }
         model.addAttribute("sorted", sort);
         model.addAttribute("tasks", tasks);
@@ -116,7 +120,7 @@ public class TasksController {
     }
 
     @GetMapping(value = "/tasks")
-    public String getAllTasks(@RequestParam(name = "sort", defaultValue = "new") String sort, @RequestParam(value = "topic", required = false) Topic topic, Model model) {
+    public String getAllTasks(@RequestParam(name = "sort", defaultValue = "new") String sort, @RequestParam(value = "topic", required = false) String topic, Model model) {
         List<TaskDto> tasks = tasksService.getAllTasksOrderByDateDesc();
         if (sort.equals("old")) {
             tasks.sort(Comparator.comparing(TaskDto::getPublishDate));
