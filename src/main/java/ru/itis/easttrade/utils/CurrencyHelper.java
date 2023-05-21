@@ -6,10 +6,12 @@ import okhttp3.Response;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.stereotype.Component;
 import ru.itis.easttrade.exceptions.CurrencyApiException;
 
 import java.io.IOException;
 
+@Component
 public class CurrencyHelper {
     private final String CURRENCY_API_URL = "https://www.cbr-xml-daily.ru/daily_json.js";
     private final String VALUTE_KEY = "Valute";

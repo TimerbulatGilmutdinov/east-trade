@@ -31,7 +31,8 @@
     </div>
     <div class="field">
         <label>Цена:</label>
-        <p th:text="${task.price}"></p>
+        <p th:text="${task.price}+'Р'"></p>
+        <p th:text="${USD}+'$'"></p>
     </div>
     <div class="field">
         <label>Состояние:</label>

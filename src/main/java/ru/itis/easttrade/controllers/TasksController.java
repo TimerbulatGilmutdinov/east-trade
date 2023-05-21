@@ -15,6 +15,7 @@ import ru.itis.easttrade.models.Topic;
 import ru.itis.easttrade.repositories.TasksRepository;
 import ru.itis.easttrade.services.AccountsService;
 import ru.itis.easttrade.services.TasksService;
+import ru.itis.easttrade.utils.CurrencyHelper;
 import ru.itis.easttrade.utils.RightsResolver;
 import ru.itis.easttrade.utils.RoleChecker;
 
@@ -29,6 +30,7 @@ public class TasksController {
     private final AccountsService accountsService;
     private final RoleChecker roleChecker;
     private final RightsResolver rightsResolver;
+    private final CurrencyHelper currencyHelper;
 
 
     @GetMapping("/tasks/{id}")
@@ -36,6 +38,7 @@ public class TasksController {
         TaskDto task = tasksService.getTaskById(id);
         model.addAttribute("hasEnoughAuthority", rightsResolver.resolveTaskAction(id,authentication));
         model.addAttribute("task", task);
+        model.addAttribute("USD", currencyHelper.getCurrency("USD"));
         return "task";
     }
 
