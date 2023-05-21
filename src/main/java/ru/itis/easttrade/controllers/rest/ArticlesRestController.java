@@ -26,7 +26,8 @@ public class ArticlesRestController implements ArticlesApi {
 
     @Override
     public ResponseEntity<ArticleDto> createArticle(@RequestBody ArticleDto articleDto, Authentication authentication) {
-        return null;
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(articlesService.saveArticle(articleDto,authentication));
     }
 
     @Override
@@ -38,6 +39,7 @@ public class ArticlesRestController implements ArticlesApi {
 
     @Override
     public ResponseEntity<?> deleteArticleById(Integer id, Authentication authentication) {
-        return null;
+        articlesService.deleteArticleById(id,authentication);
+        return ResponseEntity.accepted().build();
     }
 }

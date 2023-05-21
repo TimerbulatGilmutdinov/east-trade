@@ -47,15 +47,9 @@ public interface ArticlesApi {
                             @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = ArticleDto.class))
                     }
-            ),
-            @ApiResponse(responseCode = "404", description = "Exception info",
-                    content = {
-                            @Content(mediaType = "application/json",
-                                    schema = @Schema(implementation = ExceptionDto.class))
-                    }
             )
     })
-    @GetMapping("/api/create-article")
+    @PostMapping("/api/create-article")
     ResponseEntity<ArticleDto> createArticle(@RequestBody ArticleDto articleDto, Authentication authentication);
 
 
@@ -89,7 +83,7 @@ public interface ArticlesApi {
                     }
             )
     })
-    @PostMapping("/api/articles/{id}/delete")
+    @DeleteMapping("/api/articles/{id}")
     ResponseEntity<?> deleteArticleById(
             @Parameter(description = "Article's id", example = "123") @PathVariable("id") Integer id, Authentication authentication);
 }
