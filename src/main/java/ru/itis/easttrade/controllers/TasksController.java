@@ -20,6 +20,7 @@ import ru.itis.easttrade.utils.RightsResolver;
 import ru.itis.easttrade.utils.RoleChecker;
 
 import java.security.Principal;
+import java.text.DecimalFormat;
 import java.util.Comparator;
 import java.util.List;
 
@@ -38,7 +39,9 @@ public class TasksController {
         TaskDto task = tasksService.getTaskById(id);
         model.addAttribute("hasEnoughAuthority", rightsResolver.resolveTaskAction(id,authentication));
         model.addAttribute("task", task);
-        model.addAttribute("USD", currencyHelper.getCurrency("USD"));
+        DecimalFormat decimalFormat = new DecimalFormat("#.###");
+        String secondResult = decimalFormat.format(task.getPrice()/currencyHelper.getCurrency("USD"));
+        model.addAttribute("USD", secondResult);
         return "task";
     }
 
@@ -61,9 +64,24 @@ public class TasksController {
     }
 
     @GetMapping("/my-tasks")
-    public String myTasks(Model model, Authentication authentication) {
+    public String myTasks(@RequestParam(name = "sort",defaultValue = "new")String sort, @RequestParam(name = "topic", required = false) Topic topic,Model model, Authentication authentication) {
         AccountDto accountDto = accountsService.getAccountByEmail(authentication.getName());
         List<TaskDto> tasks = tasksService.getTasksByAccount(accountDto);
+
+        if (sort.equals("old")) {
+            tasks.sort(Comparator.comparing(TaskDto::getPublishDate));
+        }else {
+            tasks.sort(Comparator.comparing(TaskDto::getPublishDate).reversed());
+        }
+        if (topic == null || topic.name().equals("ALL")) {
+            model.addAttribute("topic", "ALL");
+        } else {
+            tasks = tasksService.getSortedTasksByTopic(tasks, topic);
+            model.addAttribute("topic", topic.name());
+        }
+        model.addAttribute("sorted", sort);
+        model.addAttribute("tasks", tasks);
+
         model.addAttribute("tasks", tasks);
         return "my-tasks";
     }

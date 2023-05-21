@@ -9,9 +9,9 @@
 <body>
 <div class="container">
     <label>Sort by:</label>
-    <select name="priority" id="priority">
-        <option value="new">Newest first</option>
-        <option value="old">Oldest first</option>
+    <select name="sortSelect" id="sortSelect" onchange="sortArticles()">
+        <option value="new" th:selected="${sorted=='new'}">Newest first</option>
+        <option value="old" th:selected="${sorted=='old'}">Oldest first</option>
     </select>
 </div>
 <div class="container" th:each="article :${articles}">
@@ -37,5 +37,5 @@
 
 <script src="/static/js/my-articles.js">
 </script>
-</body>
+
 </html>

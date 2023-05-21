@@ -29,13 +29,7 @@
         <a th:href="@{/articles/{id}(id=${article.id})}"><p th:text="${article.title}"></p></a>
     </div>
 </div>
-<script>
-    function sortTasks() {
-        let timeSelect = document.getElementById("sortSelect");
-        let timeSelectedValue = timeSelect.value;
-
-        window.location.href = "/articles?sort=" + timeSelectedValue;
-    }
+<script src="/static/js/my-articles.js">
 </script>
 </body>
 </html>

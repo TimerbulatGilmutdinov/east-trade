@@ -23,10 +23,11 @@ public class SecurityConfig  {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .csrf().disable()
+                .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).ignoringAntMatchers("/my-tasks","/my-articles")
+                .and()
                 .authorizeRequests()
-                .antMatchers("/","/welcome","/articles","/tasks").permitAll()
-                .antMatchers("/profile").authenticated()
+                .antMatchers("/","/welcome","/articles/**","/tasks/**").permitAll()
+                .antMatchers("/profile","/search").authenticated()
                 .antMatchers("/create-task", "/create-article").authenticated()
                 .antMatchers("/my-tasks", "/my-articles").authenticated()
                 .and()
@@ -43,7 +44,7 @@ public class SecurityConfig  {
                 .deleteCookies("JSESSIONID")
                 .and()
                 .exceptionHandling()
-                .accessDeniedPage("/403");
+                .accessDeniedPage("/denied");
 
         return httpSecurity.build();
     }

@@ -9,6 +9,7 @@
 <div class="container" th:object="${task}">
     <h1>Update Task</h1>
     <form method="post" enctype="application/x-www-form-urlencoded">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
         <div class="form-group">
             <label for="name">Title:</label>
             <input type="text" id="name" th:value="${task.name}" name="name">

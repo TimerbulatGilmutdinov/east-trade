@@ -32,16 +32,21 @@ public class ArticlesController {
         if (sort.equals("old")) {
             articles.sort(Comparator.comparing(ArticleDto::getPublishDate));
         }
-        model.addAttribute("authentication",authentication);
         model.addAttribute("sorted",sort);
         model.addAttribute("articles", articles);
         return "articles";
     }
 
     @GetMapping("/my-articles")
-    public String myArticles(Model model, Authentication authentication) {
+    public String myArticles(@RequestParam(name="sort", defaultValue = "new") String sort,Model model, Authentication authentication) {
         AccountDto accountDto = accountsService.getAccountByEmail(authentication.getName());
         List<ArticleDto> articles = articlesService.getArticlesByAccount(accountDto);
+        if (sort.equals("old")) {
+            articles.sort(Comparator.comparing(ArticleDto::getPublishDate));
+        } else {
+            articles.sort(Comparator.comparing(ArticleDto::getPublishDate).reversed());
+        }
+        model.addAttribute("sorted",sort);
         model.addAttribute("articles", articles);
         return "my-articles";
     }

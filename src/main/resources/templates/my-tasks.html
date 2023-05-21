@@ -8,11 +8,24 @@
 </head>
 <body>
 <div class="container">
-    <label>Sort by:</label>
-    <select name="priority" id="priority">
-        <option value="new">Newest first</option>
-        <option value="old">Oldest first</option>
-    </select>
+    <div class="sorting">
+        <label>Sort by:</label>
+        <select id="sortSelect" onchange="sortTasks()">
+            <option value="new" th:selected="${sorted == 'new'}">Newest First</option>
+            <option value="old" th:selected="${sorted == 'old'}">Oldest First</option>
+        </select>
+
+        <label>Topic:</label>
+        <select id="topicSelect" onchange="sortTasks()">
+            <option value="ALL" th:selected="${topic == 'ALL'}">All</option>
+            <option value="CONSTRUCTION" th:selected="${topic == 'CONSTRUCTION'}">Construction</option>
+            <option value="EDUCATION" th:selected="${topic == 'EDUCATION'}">Education</option>
+            <option value="LAND_WORK" th:selected="${topic == 'LAND_WORK'}">Land work</option>
+            <option value="LOADING" th:selected="${topic == 'LOADING'}">Loading</option>
+            <option value="HOUSEWORK" th:selected="${topic == 'HOUSEWORK'}">House work</option>
+            <option value="REPAIR" th:selected="${topic == 'REPAIR'}">Repair</option>
+        </select>
+    </div>
 </div>
 <div class="container" th:each="task :${tasks}">
     <h1 th:object="${task}" th:field="*{name}" th:inline="text">[[${task.name}]]</h1>
@@ -45,5 +58,6 @@
 
 <script src="/static/js/my-tasks.js">
 </script>
+
 </body>
 </html>

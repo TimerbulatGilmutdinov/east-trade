@@ -15,6 +15,7 @@
 <div class="container" th:object="${article}">
     <h1>Update Article</h1>
     <form method="post" enctype="application/x-www-form-urlencoded">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
         <div class="form-group">
             <label for="title">Title:</label>
             <input type="text" id="title" th:value="${article.title}" name="title">
