@@ -3,6 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta th:name="_csrf" th:content="${_csrf.token}"/>
+    <meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title th:text="${article.title}"></title>
     <link rel="stylesheet" href="/static/css/task.css">
 </head>
