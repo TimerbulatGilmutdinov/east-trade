@@ -10,6 +10,9 @@ function deleteArticle(taskId) {
             },
             success: function (result) {
                 location.reload();
+            },
+            error: function (error){
+                console.log('Ошибка при удалении'+error)
             }
         });
     }

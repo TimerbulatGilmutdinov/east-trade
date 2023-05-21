@@ -10,6 +10,9 @@ function deleteTask(taskId) {
             },
             success: function () {
                 location.reload();
+            },
+            error: function (error){
+                console.log('Ошибка при удалении'+error)
             }
         });
     }

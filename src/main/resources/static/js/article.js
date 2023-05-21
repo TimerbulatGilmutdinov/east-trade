@@ -10,6 +10,9 @@ function deleteArticle(taskId) {
             },
             success: function (result) {
                 window.location.href = '/articles';
+            },
+            error: function (error){
+                console.log('Ошибка при удалении'+error)
             }
         });
     }
