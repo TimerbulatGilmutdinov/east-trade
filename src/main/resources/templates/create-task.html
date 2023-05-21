@@ -9,6 +9,7 @@
 <div class="container">
     <h1>New Task</h1>
     <form method="post" enctype="application/x-www-form-urlencoded">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
         <div class="form-group">
             <label for="name">Title:</label>
             <input type="text" id="name" name="name">
