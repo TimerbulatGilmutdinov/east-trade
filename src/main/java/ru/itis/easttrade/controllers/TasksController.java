@@ -37,17 +37,17 @@ public class TasksController {
     @GetMapping("/tasks/{id}")
     public String getTaskById(@PathVariable("id") Integer id, Model model, Authentication authentication) {
         TaskDto task = tasksService.getTaskById(id);
-        model.addAttribute("hasEnoughAuthority", rightsResolver.resolveTaskAction(id,authentication));
+        model.addAttribute("hasEnoughAuthority", rightsResolver.resolveTaskAction(id, authentication));
         model.addAttribute("task", task);
-        DecimalFormat decimalFormat = new DecimalFormat("#.###");
-        String secondResult = decimalFormat.format(task.getPrice()/currencyHelper.getCurrency("USD"));
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+        String secondResult = decimalFormat.format(task.getPrice() / currencyHelper.getCurrency("USD"));
         model.addAttribute("USD", secondResult);
         return "task";
     }
 
     @GetMapping("/tasks/today")
-    public String getArticlesForToday(Model model){
-        model.addAttribute("tasks",tasksService.getAllTasksForToday());
+    public String getArticlesForToday(Model model) {
+        model.addAttribute("tasks", tasksService.getAllTasksForToday());
         return "tasks";
     }
 
@@ -64,15 +64,22 @@ public class TasksController {
     }
 
     @GetMapping("/my-tasks")
-    public String myTasks(@RequestParam(name = "sort",defaultValue = "new")String sort, @RequestParam(name = "topic", required = false) Topic topic,Model model, Authentication authentication) {
+    public String myTasks(@RequestParam(name = "sort", defaultValue = "new") String sort, @RequestParam(name = "topic", required = false) Topic topic, Model model, Authentication authentication) {
         AccountDto accountDto = accountsService.getAccountByEmail(authentication.getName());
         List<TaskDto> tasks = tasksService.getTasksByAccount(accountDto);
 
         if (sort.equals("old")) {
             tasks.sort(Comparator.comparing(TaskDto::getPublishDate));
-        }else {
+        } else {
             tasks.sort(Comparator.comparing(TaskDto::getPublishDate).reversed());
         }
+        tasks = sortByTopic(sort, topic, model, tasks);
+
+        model.addAttribute("tasks", tasks);
+        return "my-tasks";
+    }
+
+    private List<TaskDto> sortByTopic(@RequestParam(name = "sort", defaultValue = "new") String sort, @RequestParam(name = "topic", required = false) Topic topic, Model model, List<TaskDto> tasks) {
         if (topic == null || topic.name().equals("ALL")) {
             model.addAttribute("topic", "ALL");
         } else {
@@ -81,15 +88,13 @@ public class TasksController {
         }
         model.addAttribute("sorted", sort);
         model.addAttribute("tasks", tasks);
-
-        model.addAttribute("tasks", tasks);
-        return "my-tasks";
+        return tasks;
     }
 
     @DeleteMapping("/tasks/{id}")
     public void deleteTask(@PathVariable("id") Integer id, Authentication authentication) {
         boolean isAuthor = tasksService.getTaskById(id).getAccountEmail().equals(authentication.getName());
-        tasksService.deleteTaskById(id,authentication);
+        tasksService.deleteTaskById(id, authentication);
     }
 
     @GetMapping("/tasks/{id}/update")
@@ -116,14 +121,7 @@ public class TasksController {
         if (sort.equals("old")) {
             tasks.sort(Comparator.comparing(TaskDto::getPublishDate));
         }
-        if (topic == null || topic.name().equals("ALL")) {
-            model.addAttribute("topic", "ALL");
-        } else {
-            tasks = tasksService.getSortedTasksByTopic(tasks, topic);
-            model.addAttribute("topic", topic.name());
-        }
-        model.addAttribute("sorted", sort);
-        model.addAttribute("tasks", tasks);
+        tasks = sortByTopic(sort, topic, model, tasks);
         return "tasks";
     }
 }
