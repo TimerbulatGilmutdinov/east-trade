@@ -15,6 +15,7 @@ import ru.itis.easttrade.models.Topic;
 import ru.itis.easttrade.repositories.TasksRepository;
 import ru.itis.easttrade.services.AccountsService;
 import ru.itis.easttrade.services.TasksService;
+import ru.itis.easttrade.utils.RightsResolver;
 import ru.itis.easttrade.utils.RoleChecker;
 
 import java.security.Principal;
@@ -27,13 +28,13 @@ public class TasksController {
     private final TasksService tasksService;
     private final AccountsService accountsService;
     private final RoleChecker roleChecker;
+    private final RightsResolver rightsResolver;
 
 
     @GetMapping("/tasks/{id}")
     public String getTaskById(@PathVariable("id") Integer id, Model model, Authentication authentication) {
         TaskDto task = tasksService.getTaskById(id);
-        model.addAttribute("authentication", authentication);
-        model.addAttribute("hasEnoughAuthority", roleChecker.hasEnoughAuthority(authentication));
+        model.addAttribute("hasEnoughAuthority", rightsResolver.resolveTaskAction(id,authentication));
         model.addAttribute("task", task);
         return "task";
     }

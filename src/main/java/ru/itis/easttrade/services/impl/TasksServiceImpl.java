@@ -32,7 +32,6 @@ import java.util.stream.Collectors;
 public class TasksServiceImpl implements TasksService {
     private final TasksRepository tasksRepository;
     private final AccountsRepository accountsRepository;
-    private final RoleChecker roleChecker;
     private final RightsResolver rightsResolver;
 
     @Override

@@ -25,7 +25,7 @@
         <label>Content:</label>
         <p th:utext="${article.content}"></p>
     </div>
-    <div th:if="${authentication!=null&&(article.accountEmail==authentication.name||hasEnoughAuthority)}">
+    <div th:if="${hasEnoughAuthority}">
         <a th:href="@{/articles/{id}/update(id=${article.id})}">
             <button type="submit">Edit</button>
         </a>

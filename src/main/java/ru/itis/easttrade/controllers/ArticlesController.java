@@ -12,6 +12,7 @@ import ru.itis.easttrade.dto.UpdateArticleDto;
 import ru.itis.easttrade.services.AccountsService;
 import ru.itis.easttrade.services.ArticlesService;
 import ru.itis.easttrade.services.TasksService;
+import ru.itis.easttrade.utils.RightsResolver;
 import ru.itis.easttrade.utils.RoleChecker;
 
 import java.security.Principal;
@@ -23,7 +24,7 @@ import java.util.List;
 public class ArticlesController {
     private final AccountsService accountsService;
     private final ArticlesService articlesService;
-    private final RoleChecker roleChecker;
+    private final RightsResolver rightsResolver;
 
     @GetMapping("/articles")
     public String getAllArticles(@RequestParam(name = "sort",defaultValue = "new") String sort, Model model, Authentication authentication) {
@@ -46,8 +47,7 @@ public class ArticlesController {
     }
     @GetMapping("/articles/{id}")
     public String getArticleById(@PathVariable("id") Integer id, Model model, Authentication authentication) {
-        model.addAttribute("authentication",authentication);
-        model.addAttribute("hasEnoughAuthority", roleChecker.hasEnoughAuthority(authentication));
+        model.addAttribute("hasEnoughAuthority", rightsResolver.resolveArticleAction(id,authentication));
         model.addAttribute("article", articlesService.getArticleById(id));
         return "article";
     }
