@@ -108,7 +108,7 @@ public class AccountsServiceImpl implements AccountsService {
 
     public AccountDto grantModeratorAuthority(Integer id) {
         Account account = accountsRepository.findById(id).orElseThrow(() -> new NotFoundException("Account with id <" + id + "> not found"));
-        account.setRole(new Role(3, Role.MODERATOR));
+        account.setRole(new Role(2, Role.MODERATOR));
         accountsRepository.save(account);
         return from(account);
     }
