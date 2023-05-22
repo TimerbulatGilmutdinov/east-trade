@@ -1,3 +1,4 @@
+#syntax=docker/dockerfile:experimental
 
 FROM maven AS build
 COPY src /home/application/src
