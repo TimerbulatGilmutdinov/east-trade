@@ -35,7 +35,8 @@ public class TaskRespondsServiceImpl implements TaskRespondsService {
         TaskRespond taskRespond = TaskRespond.builder()
                 .account(account)
                 .build();
-        taskRespondRepository.save(taskRespond);
+        task.getTaskResponds().add(taskRespondRepository.save(taskRespond));
+        tasksRepository.save(task);
     }
 
     @Override
