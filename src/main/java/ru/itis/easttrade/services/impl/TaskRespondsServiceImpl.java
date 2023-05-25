@@ -24,7 +24,7 @@ public class TaskRespondsServiceImpl implements TaskRespondsService {
     private final TaskRespondRepository taskRespondRepository;
 
     @Override
-    public List<TaskRespond> getAllRespondsByTasksId(Integer id){
+    public List<TaskRespond> getAllRespondsByTasksId(Integer id) {
         return taskRespondRepository.findByTasksId(id);
     }
 
@@ -35,9 +35,7 @@ public class TaskRespondsServiceImpl implements TaskRespondsService {
         TaskRespond taskRespond = TaskRespond.builder()
                 .account(account)
                 .build();
-        if (taskRespondRepository.findByTasksId(taskId).isEmpty()&&taskRespondRepository.findByAccountId(accountId).isEmpty()) {
-            taskRespondRepository.save(taskRespond);
-        }
+        taskRespondRepository.save(taskRespond);
     }
 
     @Override
