@@ -1,5 +1,6 @@
 package ru.itis.easttrade.services;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import ru.itis.easttrade.dto.AccountDto;
 import ru.itis.easttrade.dto.UpdateTaskDto;
@@ -11,7 +12,7 @@ import java.util.List;
 public interface TasksService {
     TaskDto saveTask(UpdateTaskDto taskDto, Authentication authentication);
     void updateTask(Integer id, UpdateTaskDto updateTask, Authentication authentication);
-    void deleteTaskById(Integer id, Authentication authentication);
+    ResponseEntity<String> deleteTaskById(Integer id, Authentication authentication);
     TaskDto getTaskById(Integer id);
     List<TaskDto> getAllArticles();
     List<TaskDto> getAllTasksOrderByDateAsc();

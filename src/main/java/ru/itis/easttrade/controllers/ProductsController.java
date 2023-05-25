@@ -1,6 +1,7 @@
 package ru.itis.easttrade.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -72,8 +73,8 @@ public class ProductsController {
     }
 
     @DeleteMapping("/products/{id}")
-    public void deleteProduct(@PathVariable("id") Integer id, Authentication authentication) {
-        productsService.deleteProductById(id, authentication);
+    public ResponseEntity<String> deleteProduct(@PathVariable("id") Integer id, Authentication authentication) {
+        return productsService.deleteProductById(id, authentication);
     }
 
     @GetMapping("/products/{id}/update")

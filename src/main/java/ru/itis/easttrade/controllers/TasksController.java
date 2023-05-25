@@ -2,6 +2,7 @@ package ru.itis.easttrade.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.TypeDescriptor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -104,9 +105,9 @@ public class TasksController {
     }
 
     @DeleteMapping("/tasks/{id}")
-    public void deleteTask(@PathVariable("id") Integer id, Authentication authentication) {
+    public ResponseEntity<?> deleteTask(@PathVariable("id") Integer id, Authentication authentication) {
         boolean isAuthor = tasksService.getTaskById(id).getAccountEmail().equals(authentication.getName());
-        tasksService.deleteTaskById(id, authentication);
+        return tasksService.deleteTaskById(id, authentication);
     }
 
     @GetMapping("/tasks/{id}/update")

@@ -1,5 +1,6 @@
 package ru.itis.easttrade.services;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.itis.easttrade.dto.*;
@@ -14,7 +15,7 @@ public interface ProductsService {
     List<ProductDto> getAllProductsOrderByDateDesc();
     void updateProductById(@RequestParam("id") Integer id, UpdateProductDto product, Authentication authentication);
     ProductDto saveProduct(ProductDto productDto, Authentication authentication);
-    void deleteProductById(Integer id, Authentication authentication);
+    ResponseEntity<String> deleteProductById(Integer id, Authentication authentication);
     List<ProductDto> getProductsByAccount(AccountDto accountDto);
     List<ProductDto> getAllProductsForToday();
 }

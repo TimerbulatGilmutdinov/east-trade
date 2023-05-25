@@ -3,6 +3,7 @@ package ru.itis.easttrade.services.impl;
 import lombok.RequiredArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Safelist;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -89,10 +90,11 @@ public class ArticlesServiceImpl implements ArticlesService {
     }
 
     @Transactional
-    public void deleteArticleById(Integer id, Authentication authentication) {
+    public ResponseEntity<String> deleteArticleById(Integer id, Authentication authentication) {
         articlesRepository.findById(id).orElseThrow(() -> new NotFoundException("Article with id <" + id + "> not found"));
         if (rightsResolver.resolveArticleAction(id,authentication)) {
             articlesRepository.deleteById(id);
+            return ResponseEntity.status(200).body("Article has been deleted");
         } else {
             throw new AccessDeniedException("You don't have rights to do that");
         }

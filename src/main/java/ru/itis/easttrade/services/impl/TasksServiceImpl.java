@@ -3,6 +3,7 @@ package ru.itis.easttrade.services.impl;
 import lombok.RequiredArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Safelist;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -66,10 +67,11 @@ public class TasksServiceImpl implements TasksService {
 
     @Override
     @Transactional
-    public void deleteTaskById(Integer id, Authentication authentication) {
+    public ResponseEntity<String> deleteTaskById(Integer id, Authentication authentication) {
         tasksRepository.findById(id).orElseThrow(() -> new NotFoundException("Task with id <" + id + "> not found"));
         if (rightsResolver.resolveTaskAction(id, authentication)) {
             tasksRepository.deleteById(id);
+            return ResponseEntity.status(200).body("Task has been deleted");
         } else {
             throw new AccessDeniedException("You don't have rights to do that");
         }

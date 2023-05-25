@@ -1,5 +1,6 @@
 package ru.itis.easttrade.services;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.itis.easttrade.dto.AccountDto;
@@ -24,7 +25,7 @@ public interface ArticlesService {
 
     ArticleDto saveArticle(ArticleDto articleDto, Authentication authentication);
 
-    void deleteArticleById(Integer id, Authentication authentication);
+    ResponseEntity<String> deleteArticleById(Integer id, Authentication authentication);
 
     List<ArticleDto> getArticlesByAccount(AccountDto accountDto);
     List<ArticleDto> getAllArticlesForToday();
