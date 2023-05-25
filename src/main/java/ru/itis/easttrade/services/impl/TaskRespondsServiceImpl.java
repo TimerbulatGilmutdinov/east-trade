@@ -35,7 +35,7 @@ public class TaskRespondsServiceImpl implements TaskRespondsService {
         TaskRespond taskRespond = TaskRespond.builder()
                 .account(account)
                 .build();
-        if (taskRespondRepository.findByAccountId(accountId).isEmpty()) {
+        if (taskRespondRepository.findByTasksId(taskId).isEmpty()&&taskRespondRepository.findByAccountId(accountId).isEmpty()) {
             taskRespondRepository.save(taskRespond);
         }
     }
