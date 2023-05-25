@@ -15,11 +15,11 @@
         </div>
         <div class="form-group">
             <label for="name">Title:</label>
-            <input type="text" id="name" name="name" th:value="${task.name}" th:field="*{name}">
+            <input type="text" id="name" name="name" th:text="${task.name}" th:field="*{name}">
         </div>
         <div class="form-group">
             <label for="price">Price:</label>
-            <input type="text" id="price" name="price" th:value="${task.price}" th:field="*{price}">
+            <input type="text" id="price" name="price" th:text="${task.price}" th:field="*{price}">
         </div>
         <label for="topic">Topic:</label>
         <select name="topic" id="topic">
@@ -32,7 +32,7 @@
         </select>
         <div class="form-group">
             <label for="description">Description:</label>
-            <textarea id="description" name="description" th:value="${task.description}" th:field="*{description}"></textarea>
+            <textarea id="description" name="description" th:utext="${task.description}" th:field="*{description}"></textarea>
         </div>
 
         <button type="submit">Create Task</button>
