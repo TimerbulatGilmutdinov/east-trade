@@ -33,6 +33,10 @@ public class TasksServiceImpl implements TasksService {
     private final AccountsRepository accountsRepository;
     private final RightsResolver rightsResolver;
 
+    public List<Task> getAllByMostPopularTopic(){
+        return tasksRepository.findAllByMostPopularTopic();
+    }
+
     @Override
     @Transactional
     public TaskDto saveTask(@ModelAttribute NewUpdateTaskDto taskDto, Authentication authentication) {
