@@ -7,12 +7,15 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.itis.easttrade.converters.StringToTopicConverter;
 import ru.itis.easttrade.dto.AccountDto;
 import ru.itis.easttrade.dto.TaskDto;
-import ru.itis.easttrade.dto.UpdateTaskDto;
+import ru.itis.easttrade.dto.NewUpdateTaskDto;
 import ru.itis.easttrade.models.Topic;
 import ru.itis.easttrade.services.AccountsService;
 import ru.itis.easttrade.services.TaskRespondsService;
@@ -21,6 +24,7 @@ import ru.itis.easttrade.utils.CurrencyHelper;
 import ru.itis.easttrade.utils.RightsResolver;
 import ru.itis.easttrade.utils.RoleChecker;
 
+import javax.validation.Valid;
 import java.text.DecimalFormat;
 import java.util.Comparator;
 import java.util.List;
@@ -64,12 +68,22 @@ public class TasksController {
 
     @GetMapping("/create-task")
     public String getCreateTask(Model model) {
-        model.addAttribute("task", new UpdateTaskDto());
+        model.addAttribute("task", new NewUpdateTaskDto());
         return "create-task";
     }
 
     @PostMapping("/create-task")
-    public String createTask(@ModelAttribute("task") UpdateTaskDto taskDto, Authentication authentication) {
+    public String createTask(@Valid @ModelAttribute("task") NewUpdateTaskDto taskDto,BindingResult bindingResult, Authentication authentication, RedirectAttributes redirectAttributes, Model model) {
+        if(bindingResult.hasErrors()){
+            StringBuilder stringBuilder = new StringBuilder();
+            for(FieldError error:bindingResult.getFieldErrors()){
+                stringBuilder.append(error.getDefaultMessage()).append(", ");
+            }
+            stringBuilder.deleteCharAt(stringBuilder.lastIndexOf(","));
+            redirectAttributes.addFlashAttribute("validationErrors", stringBuilder.toString());
+            model.addAttribute("task",taskDto);
+            return "redirect:"+"/create-task";
+        }
         int id = tasksService.saveTask(taskDto, authentication).getId();
         return "redirect:" + MvcUriComponentsBuilder.fromMappingName("TC#getTaskById").arg(0, id).build();
     }
@@ -123,7 +137,7 @@ public class TasksController {
     }
 
     @PostMapping("/tasks/{id}/update")
-    public String updateTask(@PathVariable("id") Integer id, @ModelAttribute UpdateTaskDto taskDto, Authentication authentication) {
+    public String updateTask(@PathVariable("id") Integer id, @ModelAttribute NewUpdateTaskDto taskDto, Authentication authentication) {
         tasksService.updateTask(id, taskDto, authentication);
         return "redirect:" + MvcUriComponentsBuilder.fromMappingName("TC#getTaskById").arg(0, id).build();
     }

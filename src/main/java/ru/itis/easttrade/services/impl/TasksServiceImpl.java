@@ -9,7 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import ru.itis.easttrade.dto.AccountDto;
-import ru.itis.easttrade.dto.UpdateTaskDto;
+import ru.itis.easttrade.dto.NewUpdateTaskDto;
 import ru.itis.easttrade.dto.TaskDto;
 import ru.itis.easttrade.exceptions.NotFoundException;
 import ru.itis.easttrade.models.Account;
@@ -35,12 +35,12 @@ public class TasksServiceImpl implements TasksService {
 
     @Override
     @Transactional
-    public TaskDto saveTask(@ModelAttribute UpdateTaskDto taskDto, Authentication authentication) {
+    public TaskDto saveTask(@ModelAttribute NewUpdateTaskDto taskDto, Authentication authentication) {
         String email = authentication.getName();
         Account account = accountsRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("Account with email <" + email + "> not found"));
         Task newTask = Task.builder()
                 .name(taskDto.getName())
-                .price(taskDto.getPrice())
+                .price(Double.parseDouble(taskDto.getPrice()))
                 .description(taskDto.getDescription())
                 .state(Task.TaskState.PENDING)
                 .publishDate(new Date())
@@ -53,7 +53,7 @@ public class TasksServiceImpl implements TasksService {
 
     @Override
     @Transactional
-    public void updateTask(Integer id, @ModelAttribute UpdateTaskDto taskDto, Authentication authentication) {
+    public void updateTask(Integer id, @ModelAttribute NewUpdateTaskDto taskDto, Authentication authentication) {
         tasksRepository.findById(id).orElseThrow(() -> new NotFoundException("Task with id <" + id + "> not found"));
         if (rightsResolver.resolveTaskAction(id, authentication)) {
             String newName = Jsoup.clean(taskDto.getName(), Safelist.basic());
