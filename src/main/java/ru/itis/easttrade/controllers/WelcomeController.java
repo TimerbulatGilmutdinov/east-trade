@@ -29,6 +29,6 @@ public class WelcomeController {
         if(authentication!=null){
             new SecurityContextLogoutHandler().logout(request,response,authentication);
         }
-        return "redirect:"+"/welcome";
+        return "redirect:"+MvcUriComponentsBuilder.fromMappingName("WC#getWelcomePage").build();
     }
 }

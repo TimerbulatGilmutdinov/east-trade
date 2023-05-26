@@ -25,7 +25,7 @@ import java.util.List;
 public class ProductsController {
     private final ProductsService productsService;
     private final AccountsService accountsService;
-    private final RoleChecker roleChecker;
+
     private final RightsResolver rightsResolver;
     private final CurrencyHelper currencyHelper;
 

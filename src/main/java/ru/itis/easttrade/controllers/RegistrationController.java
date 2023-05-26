@@ -36,7 +36,7 @@ public class RegistrationController {
             stringBuilder.deleteCharAt(stringBuilder.lastIndexOf(","));
             redirectAttributes.addFlashAttribute("validationErrors", stringBuilder.toString());
             model.addAttribute("account",accountDto);
-            return "redirect:"+"/registration";
+            return "redirect:"+MvcUriComponentsBuilder.fromMappingName("RC#getRegistration").build();
         }
         accountsService.addAccount(accountDto);
         return "redirect:" + MvcUriComponentsBuilder.fromMappingName("LC#getLogin").build();

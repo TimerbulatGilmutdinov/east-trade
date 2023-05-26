@@ -82,7 +82,7 @@ public class TasksController {
             stringBuilder.deleteCharAt(stringBuilder.lastIndexOf(","));
             redirectAttributes.addFlashAttribute("validationErrors", stringBuilder.toString());
             model.addAttribute("task",taskDto);
-            return "redirect:"+"/create-task";
+            return "redirect:"+MvcUriComponentsBuilder.fromMappingName("TC#getCreateTask").build();
         }
         int id = tasksService.saveTask(taskDto, authentication).getId();
         return "redirect:" + MvcUriComponentsBuilder.fromMappingName("TC#getTaskById").arg(0, id).build();
