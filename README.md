@@ -1,7 +1,10 @@
 # East trade
 
 ### This is a web service designed to transfer the publication of various goods and services of my village from whatsapp chat to a separate web application
-
+![Welcome page](https://github.com/TimerbulatGilmutdinov/east-trade/blob/master/images/welcome-page.png)
+![Profile](https://github.com/TimerbulatGilmutdinov/east-trade/blob/master/images/profile.png)
+![Create article](https://github.com/TimerbulatGilmutdinov/east-trade/blob/master/images/create-article-exmaple.png)
+![Task](https://github.com/TimerbulatGilmutdinov/east-trade/blob/master/images/task-exmaple.png)
 
 ## Technologies used
 - Java 19
